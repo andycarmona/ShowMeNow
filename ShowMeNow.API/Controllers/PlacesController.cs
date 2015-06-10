@@ -35,7 +35,7 @@
             return new string[] { "value1", "value2" };
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [Route("InitializeDatabase")]
         [AcceptVerbs("GET")]
         public HttpResponseMessage InitializeDatabase()

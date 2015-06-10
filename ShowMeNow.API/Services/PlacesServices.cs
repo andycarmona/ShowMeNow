@@ -26,6 +26,22 @@
             return this._neo4jClient;
         }
 
+        public void CreateInitialData()
+        {
+            // Create entities
+            var refA = this._neo4jClient.Create(new Person() { Name = "Person A" });
+            var refB = this._neo4jClient.Create(new Person() { Name = "Person B" });
+            var refC = this._neo4jClient.Create(new Person() { Name = "Person C" });
+            var refD = this._neo4jClient.Create(new Person() { Name = "Person D" });
+
+            // Create relationships
+            this._neo4jClient.CreateRelationship(refA, new KnowsRelationship(refB));
+            this._neo4jClient.CreateRelationship(refB, new KnowsRelationship(refC));
+            this._neo4jClient.CreateRelationship(refB, new HatesRelationship(refD, new HatesData("Crazy guy")));
+            this._neo4jClient.CreateRelationship(refC, new HatesRelationship(refD, new HatesData("Don't know why...")));
+            this._neo4jClient.CreateRelationship(refD, new KnowsRelationship(refA));
+        }
+
         public void CreatePerson(string name, int age, string email)
         {
             try
@@ -88,15 +104,15 @@
         public List<Person> GetAPerson(int personId)
         {
             List<Person> personList = null;
-            
+
             try
             {
-               personList =
-                    this.InitializeNeo4J()
-                        .Cypher.Match("(user:User)")
-                        .Where((Person aPerson) => aPerson.PersonId == 1234)
-                        .Return(user => user.As<Person>())
-                        .Results.ToList();
+                personList =
+                     this.InitializeNeo4J()
+                         .Cypher.Match("(user:User)")
+                         .Where((Person aPerson) => aPerson.PersonId == 1234)
+                         .Return(user => user.As<Person>())
+                         .Results.ToList();
             }
             catch (Exception e)
             {

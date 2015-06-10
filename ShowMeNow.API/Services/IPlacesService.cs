@@ -10,6 +10,8 @@
     {
         GraphClient InitializeNeo4J();
 
+        void CreateInitialData();
+
         void CreatePerson(string name, int age, string email);
 
         void PeoplesKnowRelationShip(NodeReference<Person> firstPerson, NodeReference<Person> secondPerson);

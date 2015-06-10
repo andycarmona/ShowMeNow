@@ -10,7 +10,13 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
         return $http.get(serviceBase + 'api/Places/InitializeDatabase');
     };
 
+    var _addInitialPeople = function () {
+
+        return $http.get(serviceBase + 'api/Places/AddInitialPeople');
+    };
+
     placesServiceFactory.InitializeDataBase = _initializeDB;
+    placesServiceFactory.AddInitialPeople = _addInitialPeople;
 
     return placesServiceFactory;
 

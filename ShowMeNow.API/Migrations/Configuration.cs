@@ -7,14 +7,14 @@ namespace AngularJSAuthentication.API.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AngularJSAuthentication.API.AuthContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AuthContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AngularJSAuthentication.API.AuthContext context)
+        protected override void Seed(AuthContext context)
         {
             if (context.Clients.Count() > 0)
             {
@@ -37,7 +37,7 @@ namespace AngularJSAuthentication.API.Migrations
                     ApplicationType =  Models.ApplicationTypes.JavaScript, 
                     Active = true, 
                     RefreshTokenLifeTime = 7200, 
-                    AllowedOrigin = "http://ngauthenticationweb.azurewebsites.net"
+                    AllowedOrigin = "http://showmenowapi.se/"
                 },
                 new Client
                 { Id = "consoleApp", 

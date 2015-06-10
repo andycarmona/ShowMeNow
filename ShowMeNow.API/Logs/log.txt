@@ -1,1 +1,3 @@
 ERROR 2015-06-10 10:43:03,896 14973ms PlacesController       InitializeDatabase - Ett eller flera fel har uppstått.
+ERROR 2015-06-10 11:26:42,720   358ms PlacesController       AddInitialPeople   - Objektreferensen har inte angetts till en instans av ett objekt.
+ERROR 2015-06-10 18:41:31,936 97781ms PlacesController       AddInitialPeople   - Objektreferensen har inte angetts till en instans av ett objekt.

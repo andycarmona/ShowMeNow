@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('placesController', ['$scope,$http',  function ($scope,$http,placesService) {
+app.controller('placesController', ['$scope','placesService',  function ($scope,placesService) {
 
     $scope.places = [];
     placesService.InitializeDataBase();

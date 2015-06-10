@@ -18,6 +18,8 @@ using System.Web.Http;
 
 namespace AngularJSAuthentication.API.Controllers
 {
+    using ShowMeNow.API;
+
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

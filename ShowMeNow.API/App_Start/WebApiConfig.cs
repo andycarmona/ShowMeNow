@@ -18,8 +18,12 @@ namespace AngularJSAuthentication.API
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional });
+
+            config.Routes.MapHttpRoute(
+                name: "PlacesApi",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { action = "get", id = RouteParameter.Optional });
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

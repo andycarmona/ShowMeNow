@@ -1,20 +1,26 @@
-﻿using AngularJSAuthentication.API.Providers;
-using Microsoft.Owin;
-using Microsoft.Owin.Security.Facebook;
-using Microsoft.Owin.Security.Google;
-using Microsoft.Owin.Security.OAuth;
-using Owin;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using Microsoft.Owin;
 
-[assembly: OwinStartup(typeof(AngularJSAuthentication.API.Startup))]
+using ShowMeNow.API;
 
-namespace AngularJSAuthentication.API
+[assembly: OwinStartup(typeof(Startup))]
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Web.config", Watch = true)]
+
+namespace ShowMeNow.API
 {
+    using System;
+    using System.Data.Entity;
+    using System.Web.Http;
+
+    using AngularJSAuthentication.API;
+    using AngularJSAuthentication.API.Providers;
+
+    using Microsoft.Owin;
+    using Microsoft.Owin.Security.Facebook;
+    using Microsoft.Owin.Security.Google;
+    using Microsoft.Owin.Security.OAuth;
+
+    using Owin;
+
     public class Startup
     {
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
@@ -25,7 +31,7 @@ namespace AngularJSAuthentication.API
         {
             HttpConfiguration config = new HttpConfiguration();
 
-            ConfigureOAuth(app);
+            this.ConfigureOAuth(app);
 
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);

@@ -81,6 +81,7 @@
     <Content Include="app\views\tokens.html" />
     <Content Include="authComplete.html" />
     <Content Include="content\css\font-awesome.min.css" />
+    <Content Include="content\css\kendo.black.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />

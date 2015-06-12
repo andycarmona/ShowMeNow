@@ -24,7 +24,7 @@
 
         List<Person> GetAllPeople();
             
-            List<Person> GetAPerson(int personId);
+            List<Person> GetAPerson(string name);
 
         NodeReference<Person> GetPersonNodeReference(int nodeId);
             

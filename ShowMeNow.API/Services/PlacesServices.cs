@@ -69,12 +69,15 @@ namespace ShowMeNow.API.Services
             PeoplesKnowRelationShip(refD, refA);
         }
 
+        /*
+         * Creates a node Person in graph
+         */
         public NodeReference<Person> CreatePerson(string name, int age, string email)
         {
             NodeReference<Person> refPerson = null;
             try
             {
-                refPerson = this._neo4jClient.Create(new Person { Age = age, Email = email, Name = name, PersonId = 0 });
+                refPerson = this._neo4jClient.Create(new Person { Age = age, Email = email, Name = name, PersonId = Guid.NewGuid() });
             }
             catch (Exception e)
             {
@@ -84,6 +87,9 @@ namespace ShowMeNow.API.Services
             return refPerson;
         }
 
+        /*
+         * Creates a friendship relation between two nodes
+         */
         public void PeoplesKnowRelationShip(NodeReference<Person> firstPerson, NodeReference<Person> secondPerson)
         {
             try
@@ -96,6 +102,9 @@ namespace ShowMeNow.API.Services
             }
         }
 
+        /*
+         * Creates a hate relation between two nodes
+         */
         public void PeoplesHatesRelationShip(NodeReference<Person> firstPerson, NodeReference<Person> secondPerson, string reason)
         {
             try
@@ -111,6 +120,9 @@ namespace ShowMeNow.API.Services
 
         }
 
+        /*
+         * Get all people by label
+         */
         public List<Person> GetAllPeopleByLabel()
         {
             List<Person> peopleByLabel = null;
@@ -118,7 +130,7 @@ namespace ShowMeNow.API.Services
             {
                 peopleByLabel =
                     this.InitializeNeo4J()
-                        .Cypher.Match("(user:User)")
+                        .Cypher.Match("(user:Person)")
                         .Return(user => user.As<Person>())
                         .Results.ToList();
             }
@@ -130,21 +142,24 @@ namespace ShowMeNow.API.Services
             return peopleByLabel;
         }
 
+        /*
+         * Gets all people with certain relation with a person
+         */
         public List<Person> GetAllPeople()
         {
-            //var query = this.InitializeNeo4J()
-            // .Cypher
-            //    .Start(new { root = this.InitializeNeo4J().RootNode })
-            //         .Match("root-[:HATES]->book")
-            //            .Return(user => user.As<Person>()).Results;
-            //return query.ToList();
-            return null;
+            var query = this.InitializeNeo4J()
+             .Cypher
+                .Start(new { root = this.InitializeNeo4J().RootNode })
+                     .Match("root-[:HATES]->person")
+                        .Return(user => user.As<Person>()).Results;
+            return query.ToList();
+         
         }
 
         /*
          * Get a person by personId property
          */
-        public List<Person> GetAPerson(int personId)
+        public List<Person> GetAPerson(string name)
         {
             List<Person> personList = null;
 
@@ -153,7 +168,7 @@ namespace ShowMeNow.API.Services
                 personList =
                      this.InitializeNeo4J()
                          .Cypher.Match("(user:User)")
-                         .Where((Person aPerson) => aPerson.PersonId == 1234)
+                         .Where((Person aPerson) => aPerson.Name == name)
                          .Return(user => user.As<Person>())
                          .Results.ToList();
             }

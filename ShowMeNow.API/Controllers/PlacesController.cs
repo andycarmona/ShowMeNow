@@ -83,6 +83,29 @@ namespace ShowMeNow.API.Controllers
             return response;
         }
 
+        public HttpResponseMessage GetAllPeople()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                _placeService.InitializeNeo4J();
+                _placeService.GetAllPeople();
+                response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                               {
+                                   Content =
+                                       new StringContent(
+                                       "Success!! You created new people in DB")
+                               };
+            }
+            catch (Exception e)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
+                logger.Error(e.Message);
+            }
+
+            return response;
+        }
+
         // GET: api/Places
         public IEnumerable<string> Get()
         {

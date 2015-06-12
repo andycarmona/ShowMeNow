@@ -1,8 +1,10 @@
 ﻿namespace ShowMeNow.API.Models
 {
+    using System;
+
     public class Person
     {
-        public long PersonId { get; set; }
+        public Guid PersonId { get; set; }
 
         public string Name { get; set; }
 

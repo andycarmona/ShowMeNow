@@ -4,5 +4,30 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
     $scope.places = [];
     //placesService.InitializeDataBase();
     //placesService.AddInitialPeople();
+    $scope.monthPickerConfig = {
+        start: "year",
+        depth: "year",
+        format: "MMMM yyyy"
+    };
 
+    $scope.source = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "http://demos.telerik.com/kendo-ui/service/products",
+                dataType: "jsonp"
+            }
+        },
+        pageSize: 5
+    });
+
+    $scope.products = new kendo.data.DataSource({
+        data: [
+           { id: 1, name: 'Tennis Balls', department: 'Sports', lastShipment: '10/01/2013' },
+           { id: 2, name: 'Basket Balls', department: 'Sports', lastShipment: '10/02/2013' },
+           { id: 3, name: 'Oil', department: 'Auto', lastShipment: '10/01/2013' },
+           { id: 4, name: 'Filters', department: 'Auto', lastShipment: '10/01/2013' },
+           { id: 5, name: 'Dresser', department: 'Home Furnishings', lastShipment: '10/01/2013' }
+        ],
+        pageSize: 2
+    });
 }]);

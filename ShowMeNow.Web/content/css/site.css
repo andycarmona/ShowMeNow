@@ -73,7 +73,7 @@ body {
 }
 
 /* The two faces of the cube */
-.flippety,.flop {
+.frontFace,.backFace {
     background: rgb(247, 247, 247);
 	border: 1px solid rgba(147, 184, 189, .8);
 
@@ -88,7 +88,7 @@ body {
 }
 
 /* Position the faces */
-.flippety {
+.frontFace {
     -webkit-transform: translateZ(50px);
     -moz-transform: translateZ(50px);
     -ms-transform: translateZ(50px);
@@ -96,7 +96,7 @@ body {
     transform: translateZ(50px);
 }
 
-.flop {
+.backFace {
     -webkit-transform: rotateX(-90deg) translateZ(-50px);
     -moz-transform: rotateX(-90deg) translateZ(-50px);
     -ms-transform: rotateX(-90deg) translateZ(-50px);

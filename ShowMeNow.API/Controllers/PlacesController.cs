@@ -1,13 +1,19 @@
-﻿namespace ShowMeNow.API.Controllers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PlacesController.cs" company="Uni-app">
+//   
+// </copyright>
+// <summary>
+//   Controller to handle places of interested
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ShowMeNow.API.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-
-    using Neo4jClient;
-
     using ShowMeNow.API.Helpers;
     using ShowMeNow.API.Services;
 
@@ -16,7 +22,6 @@
     {
         private readonly IPlacesService _placeService;
         private readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
 
         public PlacesController()
         {
@@ -29,32 +34,82 @@
             _placeService = placeService;
         }
 
-        // GET: api/Places
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        [Authorize]
         [Route("InitializeDatabase")]
         [AcceptVerbs("GET")]
         public HttpResponseMessage InitializeDatabase()
         {
-            
-            HttpResponseMessage response = null;
+            HttpResponseMessage response;
             try
             {
                 _placeService.InitializeNeo4J();
-                response = new HttpResponseMessage(HttpStatusCode.Accepted);
-                response.Content = new StringContent("Success!! You are connected to Neo4j database");
+                response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                               {
+                                   Content =
+                                       new StringContent(
+                                       "Success!! You are connected to Neo4j database")
+                               };
             }
             catch (Exception e)
             {
-                response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                response.Content = new StringContent(e.Message);
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
                 logger.Error(e.Message);
             }
+
             return response;
+        }
+
+        [Route("AddInitialPeople")]
+        [AcceptVerbs("GET")]
+        public HttpResponseMessage AddInitialPeople()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                _placeService.InitializeNeo4J();
+                _placeService.CreateInitialData();
+                response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                               {
+                                   Content =
+                                       new StringContent(
+                                       "Success!! You created new people in DB")
+                               };
+            }
+            catch (Exception e)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
+                logger.Error(e.Message);
+            }
+
+            return response;
+        }
+
+        public HttpResponseMessage GetAllPeople()
+        {
+            HttpResponseMessage response;
+            try
+            {
+                _placeService.InitializeNeo4J();
+                _placeService.GetAllPeople();
+                response = new HttpResponseMessage(HttpStatusCode.Accepted)
+                               {
+                                   Content =
+                                       new StringContent(
+                                       "Success!! You created new people in DB")
+                               };
+            }
+            catch (Exception e)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
+                logger.Error(e.Message);
+            }
+
+            return response;
+        }
+
+        // GET: api/Places
+        public IEnumerable<string> Get()
+        {
+            return new[] { "value1", "value2" };
         }
 
         // GET: api/Places/5

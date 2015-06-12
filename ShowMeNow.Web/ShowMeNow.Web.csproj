@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AngularJSAuthentication.Web</RootNamespace>
-    <AssemblyName>AngularJSAuthentication.Web</AssemblyName>
+    <AssemblyName>ShowMeNow.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -81,6 +81,7 @@
     <Content Include="app\views\tokens.html" />
     <Content Include="authComplete.html" />
     <Content Include="content\css\font-awesome.min.css" />
+    <Content Include="content\css\kendo.black.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />
@@ -94,6 +95,7 @@
     <Content Include="content\fonts\fontawesome-webfont.woff" />
     <Content Include="content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\ngauthenticationweb.pubxml" />
+    <None Include="Properties\PublishProfiles\showmeWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

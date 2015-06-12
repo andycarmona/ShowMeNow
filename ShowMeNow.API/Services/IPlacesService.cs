@@ -10,7 +10,11 @@
     {
         GraphClient InitializeNeo4J();
 
-        void CreatePerson(string name, int age, string email);
+        void UpdateNodeProperties(int nodeId, string name);
+
+        void CreateInitialData();
+
+        NodeReference<Person> CreatePerson(string name, int age, string email);
 
         void PeoplesKnowRelationShip(NodeReference<Person> firstPerson, NodeReference<Person> secondPerson);
 
@@ -18,9 +22,13 @@
 
         List<Person> GetAllPeopleByLabel();
 
-        List<Person> GetAPerson(int personId);
+        List<Person> GetAllPeople();
+            
+            List<Person> GetAPerson(string name);
 
-        List<Person> GetAllFriends(int personId);
+        NodeReference<Person> GetPersonNodeReference(int nodeId);
+            
+            List<Person> GetAllFriends(int personId);
 
     }
 }

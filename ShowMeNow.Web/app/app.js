@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar','kendo.directives']);
 
 app.config(function ($routeProvider) {
 
@@ -47,8 +47,9 @@ app.config(function ($routeProvider) {
 
 });
 
-var serviceBase = 'http://localhost:26264/';
+//var serviceBase = 'http://localhost:26264/';
 //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
+var serviceBase = 'http://showmenowapi.se/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase,
     clientId: 'ngAuthApp'

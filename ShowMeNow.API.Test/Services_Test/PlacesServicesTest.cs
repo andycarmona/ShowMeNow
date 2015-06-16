@@ -43,11 +43,9 @@
             var refD = _placeService.CreatePerson(new Person() { Age = 42, Email = "lovo@se.se", Name = "Sara", PersonId = 5 });
 
             // Create relationships
-            //_placeService.PersonKnowsPerson(refA, refB);
-            //_placeService.PersonKnowsPerson(refB, refC);
             //_placeService.PeoplesHatesRelationShip(refB, refD, "crazy guy");
             //_placeService.PeoplesHatesRelationShip(refC, refD, "Don't know why");
-            //_placeService.PersonKnowsPerson(refD, refA);
+        
         }
 
         [TestMethod]
@@ -73,15 +71,15 @@
             InitializeDB();
 
             var person1 = new Person() { Age = 3, Email = "tes@se.se", Name = "Carlos", PersonId = 3 };
-                //_placeService.CreatePerson(person1);
+            _placeService.CreatePerson(person1);
             var person2 = new Person() { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = 4 };
-               //_placeService.CreatePerson(person2);
+            _placeService.CreatePerson(person2);
 
-           //_placeService.PersonKnowsPerson(person1, person2);
-          
+            _placeService.PersonKnowsPerson(person1, person2);
 
-           _placeService.DeletePerson(person1.Name);
-           _placeService.DeletePerson(person2.Name);
+
+            DeletePerson(person1.Name);
+         DeletePerson(person2.Name);
         }
 
 
@@ -90,7 +88,7 @@
         {
             var result = _placeService.GetAllFriends(name);
 
-            if (result == null)
+            if (result.Count <1)
             {
                 _placeService.DeletePerson(name);
                

@@ -119,7 +119,7 @@ namespace ShowMeNow.API.Services
             var success = true;
             try
             {
-                this._neo4jClient.Cypher.OptionalMatch("(aPerson:Person)<-[r]-()")
+                this._neo4jClient.Cypher.OptionalMatch("(aPerson:Person)-[r]->()")
                     .Where((Person aPerson) => aPerson.Name == name)
                     .Delete("r, aPerson")
                     .ExecuteWithoutResults();
@@ -236,38 +236,6 @@ namespace ShowMeNow.API.Services
         }
 
         /*
-         * Get node with no relations
-         */
-
-        public List<Person> GetNodeNotRelated(string name)
-        {
-                    List<Person> personList = null;
-                     try
-                     {
-                         personList =
-                  this.InitializeNeo4J()
-                      .Cypher.OptionalMatch("(user:User)-[FRIENDS_WITH]->()")
-                      .Where((Person user) => user.Name == name)
-                      .Return(aPerson => aPerson.As<Person>())
-                      .Results.ToList();
-                     }
-            catch (Exception e)
-            {
-                logger.Error(e.Message);
-            }
-
-            return personList;
-        } 
-
-        /*
-         * Gets Person node reference in graph by id
-         */
-        public NodeReference<Person> GetPersonNodeReference(int nodeId)
-        {
-            return (NodeReference<Person>)nodeId;
-        }
-
-        /*
          * Gets all people whith a friendship relation with a person
          */
         public List<Person> GetAllFriends(string name)
@@ -277,8 +245,8 @@ namespace ShowMeNow.API.Services
             {
                 listOfFriends =
                     this.InitializeNeo4J()
-                        .Cypher.OptionalMatch("(user:User)-[FRIENDS_WITH]-()")
-                        .Where((Person user) => user.Name == name)
+                        .Cypher.Match("(aPerson:Person)-[:FRIENDS_WITH]->()")
+                        .Where((Person aPerson) => aPerson.Name == name)
                         .Return(aPerson => aPerson.As<Person>())
                         .Results.ToList();
             }

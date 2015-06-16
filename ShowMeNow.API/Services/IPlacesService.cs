@@ -26,8 +26,6 @@
 
         List<Person> GetAPerson(string name);
 
-        NodeReference<Person> GetPersonNodeReference(int nodeId);
-
         List<Person> GetAllFriends(string name);
 
         NodeReference<Place> CreatePlace(Place aPlace);

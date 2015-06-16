@@ -15,7 +15,6 @@ namespace ShowMeNow.API.Services
 
     using Neo4jClient;
 
-    using ShowMeNow.API.Models;
     using ShowMeNow.API.Models.RelationModeles;
 
     public class PlacesServices : IPlacesService
@@ -50,34 +49,21 @@ namespace ShowMeNow.API.Services
                 });
         }
 
-        /*
-         * Creates initial graph in DB
-         * */
-        public void CreateInitialData()
-        {
-            // Create entities
-            var refA = this.CreatePerson("Person A", 12, "test@er.se");
-            var refB = this.CreatePerson("Person B", 13, "test@er.se");
-            var refC = this.CreatePerson("Person C", 32, "test@hotmail.se");
-            var refD = this.CreatePerson("Person D", 42, "test@gmail.se");
-
-            // Create relationships
-            PeoplesKnowRelationShip(refA, refB);
-            PeoplesKnowRelationShip(refB, refC);
-            PeoplesHatesRelationShip(refB, refD, "crazy guy");
-            PeoplesHatesRelationShip(refC, refD, "Don't know why");
-            PeoplesKnowRelationShip(refD, refA);
-        }
 
         /*
          * Creates a node Person in graph
          */
-        public NodeReference<Person> CreatePerson(string name, int age, string email)
+        public Person CreatePerson(Person aPerson)
         {
-            NodeReference<Person> refPerson = null;
+            Person refPerson = null;
             try
             {
-                refPerson = this._neo4jClient.Create(new Person { Age = age, Email = email, Name = name, PersonId = Guid.NewGuid() });
+                refPerson = this._neo4jClient.Cypher
+                .Create("(p:Person {param})")
+                .WithParam("param", aPerson)
+                .Return<Person>("p")
+                 .Results
+                .Single();
             }
             catch (Exception e)
             {
@@ -88,18 +74,87 @@ namespace ShowMeNow.API.Services
         }
 
         /*
-         * Creates a friendship relation between two nodes
+         * Creates a Node places
          */
-        public void PeoplesKnowRelationShip(NodeReference<Person> firstPerson, NodeReference<Person> secondPerson)
+        public NodeReference<Place> CreatePlace(Place aPlace)
         {
+            NodeReference<Place> refPlaces = null;
             try
             {
-                this._neo4jClient.CreateRelationship(firstPerson, new KnowsRelationship(secondPerson));
+                refPlaces = this._neo4jClient.Create(aPlace);
             }
             catch (Exception e)
             {
                 logger.Error(e.Message);
             }
+
+            return refPlaces;
+        }
+
+        public bool DeletePerson(string name)
+        {
+            bool success = true;
+            try
+            {
+                this._neo4jClient.Cypher.Match("(aPerson:Person)")
+                    .Where((Person aPerson) => aPerson.Name == name)
+                    .Delete("aPerson")
+                    .ExecuteWithoutResults();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+                success = false;
+            }
+            return success;
+        }
+
+        public void DeleteAllNodes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeletePersonAndRelations(string name)
+        {
+            var success = true;
+            try
+            {
+                this._neo4jClient.Cypher.OptionalMatch("(aPerson:Person)-[r]->()")
+                    .Where((Person aPerson) => aPerson.Name == name)
+                    .Delete("r, aPerson")
+                    .ExecuteWithoutResults();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+                success = false;
+            }
+            return success;
+        }
+
+        /*
+         * Creates a friendship relation between two nodes
+         */
+        public void PersonKnowsPerson(Person firstPerson, Person secondPerson)
+        {
+            try
+            {
+                this._neo4jClient.Cypher
+                    .Match("(person1:Person)", "(person2:Person)")
+                    .Where((Person person1) => person1.Name == firstPerson.Name)
+                    .AndWhere((Person person2) => person2.Name == secondPerson.Name)
+                    .CreateUnique("person1-[:FRIENDS_WITH]->person2")
+                    .ExecuteWithoutResults();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
+        }
+
+        public void PeopleKnowsPlace(Person aPerson, Place aPlace)
+        {
+            throw new NotImplementedException();
         }
 
         /*
@@ -130,8 +185,8 @@ namespace ShowMeNow.API.Services
             {
                 peopleByLabel =
                     this.InitializeNeo4J()
-                        .Cypher.Match("(user:Person)")
-                        .Return(user => user.As<Person>())
+                        .Cypher.Match("(aPerson:Person)")
+                        .Return(aPerson => aPerson.As<Person>())
                         .Results.ToList();
             }
             catch (Exception e)
@@ -153,7 +208,7 @@ namespace ShowMeNow.API.Services
                      .Match("root-[:HATES]->person")
                         .Return(user => user.As<Person>()).Results;
             return query.ToList();
-         
+
         }
 
         /*
@@ -167,9 +222,9 @@ namespace ShowMeNow.API.Services
             {
                 personList =
                      this.InitializeNeo4J()
-                         .Cypher.Match("(user:User)")
+                         .Cypher.Match("(aPerson:Person)")
                          .Where((Person aPerson) => aPerson.Name == name)
-                         .Return(user => user.As<Person>())
+                         .Return(aPerson => aPerson.As<Person>())
                          .Results.ToList();
             }
             catch (Exception e)
@@ -181,36 +236,27 @@ namespace ShowMeNow.API.Services
         }
 
         /*
-         * Gets Person node reference in graph by id
-         */
-        public NodeReference<Person> GetPersonNodeReference(int nodeId)
-        {
-            return (NodeReference<Person>)nodeId;
-        }
-
-        /*
          * Gets all people whith a friendship relation with a person
          */
-        public List<Person> GetAllFriends(int personId)
+        public List<Person> GetAllFriends(string name)
         {
             List<Person> listOfFriends = null;
-            //try
-            //{
-            //    listOfFriends =
-            //        this.InitializeNeo4J()
-            //            .Cypher.OptionalMatch("(user:User)-[FRIENDS_WITH]-(friend:User)")
-            //            .Where((Person aPerson) => aPerson.PersonId == 1234)
-            //            .Return(
-            //                (aPerson, friend) =>
-            //                new { User = aPerson.As<Person>(), Friends = friend.CollectAs<Person>() })
-            //            .Results.ToList();
-            //}
-            //catch (Exception e)
-            //{
-            //    logger.Error(e.Message);
-            //}
+            try
+            {
+                listOfFriends =
+                    this.InitializeNeo4J()
+                        .Cypher.Match("(aPerson:Person)-[:FRIENDS_WITH]->()")
+                        .Where((Person aPerson) => aPerson.Name == name)
+                        .Return(aPerson => aPerson.As<Person>())
+                        .Results.ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
 
             return listOfFriends;
         }
+
     }
 }

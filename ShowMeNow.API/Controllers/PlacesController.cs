@@ -66,7 +66,7 @@ namespace ShowMeNow.API.Controllers
             try
             {
                 _placeService.InitializeNeo4J();
-                _placeService.CreateInitialData();
+          
                 response = new HttpResponseMessage(HttpStatusCode.Accepted)
                                {
                                    Content =
@@ -83,6 +83,8 @@ namespace ShowMeNow.API.Controllers
             return response;
         }
 
+        [Route("GetAllPeople")]
+        [AcceptVerbs("GET")]
         public HttpResponseMessage GetAllPeople()
         {
             HttpResponseMessage response;

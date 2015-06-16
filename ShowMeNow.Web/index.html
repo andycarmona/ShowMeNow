@@ -113,9 +113,9 @@
     <div class="jumbotron">
         <div class="container">
             <div class="page-header text-center">
-                <h1>AngularJS Authentication</h1>
+                <h1>Show me now</h1>
             </div>
-            <p>AngularJS Application which uses OAuth Bearer Token for authentication and implements Refresh Tokens. The backend API is built using ASP.NET Web API 2, OWIN middleware, and ASP.NET Identity.</p>
+            <p>Show me good places to go</p>
         </div>
     </div>
 
@@ -145,8 +145,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="scripts/loading-bar.min.js"></script>
-    <script src="http://cdn.kendostatic.com/2015.1.429/js/kendo.all.min.js"></script>
-    <!--<script src="http://cdn.kendostatic.com/2014.2.716/js/kendo.ui.core.min.js"></script>-->
+    <script src="scripts/kendo.custom.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/snap.svg/0.1.0/snap.svg.js"></script>
+    
 
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
@@ -167,8 +168,10 @@
     <script src="app/controllers/refreshController.js?v=2"></script>
     <script src="app/controllers/tokensManagerController.js?v=2"></script>
     <script src="app/controllers/associateController.js?v=2"></script>
+
     <!-- Load custom filters -->
     <!-- Load custom directives -->
+    <script src="app/directives/SvgDirectives.js"></script>
 
 </body>
 </html>

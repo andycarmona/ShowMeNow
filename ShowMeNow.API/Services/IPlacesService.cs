@@ -22,8 +22,6 @@
 
         List<Person> GetAllPeopleByLabel();
 
-        List<Person> GetAllPeople();
-
         List<Person> GetAPerson(string name);
 
         List<Person> GetAllFriends(string name);

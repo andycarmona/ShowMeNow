@@ -198,20 +198,6 @@ namespace ShowMeNow.API.Services
         }
 
         /*
-         * Gets all people with certain relation with a person
-         */
-        public List<Person> GetAllPeople()
-        {
-            var query = this.InitializeNeo4J()
-             .Cypher
-                .Start(new { root = this.InitializeNeo4J().RootNode })
-                     .Match("root-[:HATES]->person")
-                        .Return(user => user.As<Person>()).Results;
-            return query.ToList();
-
-        }
-
-        /*
          * Get a person by personId property
          */
         public List<Person> GetAPerson(string name)

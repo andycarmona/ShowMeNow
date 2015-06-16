@@ -85,13 +85,14 @@ namespace ShowMeNow.API.Controllers
 
         [Route("GetAllPeople")]
         [AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllPeople()
+        public HttpResponseMessage GetAllFriends(string name)
         {
             HttpResponseMessage response;
             try
             {
+                _placeService.GetAllFriends(name);
                 _placeService.InitializeNeo4J();
-                _placeService.GetAllPeople();
+               
                 response = new HttpResponseMessage(HttpStatusCode.Accepted)
                                {
                                    Content =

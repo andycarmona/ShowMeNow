@@ -3,7 +3,7 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
 
     $scope.places = [];
     //placesService.InitializeDataBase();
-    //placesService.AddInitialPeople();
+
     $scope.monthPickerConfig = {
         start: "year",
         depth: "year",
@@ -17,7 +17,7 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
                 dataType: "jsonp"
             }
         },
-        pageSize: 5
+        pageSize: 2
     });
 
     $scope.products = new kendo.data.DataSource({

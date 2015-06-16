@@ -172,6 +172,7 @@
     <Compile Include="Models\RelationModeles\KnowsRelationShip.cs" />
     <Compile Include="Models\RelationModeles\Person.cs" />
     <Compile Include="Models\RelationModeles\HatesData.cs" />
+    <Compile Include="Models\RelationModeles\Place.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Person.cs" company="Uni-app">
+// <copyright file="Place.cs" company="Uni-app">
 //   
 // </copyright>
 // <summary>
@@ -9,16 +9,21 @@
 
 namespace ShowMeNow.API.Models.RelationModeles
 {
-    using System;
-
-    public class Person
+    public class Place
     {
-        public int PersonId { get; set; }
+        public int PlaceId { get; set; }
+
+        public float Coordinates { get; set; }
 
         public string Name { get; set; }
 
-        public int Age { get; set; }
+        public string Address { get; set; }
 
-        public string Email { get; set; }
+        public int Feedback { get; set; }
+
+        public int Telephone { get; set; }
+
+        public string EMail { get; set; }
+
     }
 }

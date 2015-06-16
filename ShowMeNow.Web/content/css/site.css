@@ -105,7 +105,7 @@ body {
 }
 
 /* Rotate the cube */
-.cube:hover {
+.cubeHover  {
     -webkit-transform: rotateX(89deg);
     -moz-transform: rotateX(89deg);
     -ms-transform: rotateX(89deg);

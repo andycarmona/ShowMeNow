@@ -74,13 +74,27 @@
             _placeService.CreatePerson(person1);
             var person2 = new Person() { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = 4 };
             _placeService.CreatePerson(person2);
+            var person3 = new Person() { Age = 52, Email = "frt@se.se", Name = "Malulo", PersonId = 6 };
+            _placeService.CreatePerson(person3);
 
             _placeService.PersonKnowsPerson(person1, person2);
-
-
-            DeletePerson(person1.Name);
-         DeletePerson(person2.Name);
+            _placeService.PersonKnowsPerson(person2, person3);
         }
+
+        [TestMethod]
+        public void Test_Deleting_Nodes_WithRelationShips()
+        {
+            this.InitializeDB();
+
+            var listOfPeople = _placeService.GetAllPeople();
+
+            foreach (var person in listOfPeople)
+            {
+                Assert.IsNotNull(person);
+                Assert.IsInstanceOfType(person,typeof(Person));
+                DeletePerson(person.Name);
+            }
+    }
 
 
 
@@ -88,7 +102,7 @@
         {
             var result = _placeService.GetAllFriends(name);
 
-            if (result.Count <1)
+            if (result.Count < 1)
             {
                 _placeService.DeletePerson(name);
                
@@ -98,7 +112,5 @@
                 _placeService.DeletePersonAndRelations(name);
             }
         }
-
-
     }
 }

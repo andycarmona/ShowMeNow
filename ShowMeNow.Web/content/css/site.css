@@ -60,16 +60,22 @@ body {
 
 /* Container box to set the sides relative to */
 .cube {
-	width: 60%;
+    width: 100%;
 	text-align: center;
 	margin: 0 auto;
-	height: 400px;
+	height: 100%;
 
 	-webkit-transition: -webkit-transform .33s;
-	transition: transform .33s; /* Animate the transform properties */
+    -moz-transition: transform .33s;
+    -ms-transition: transform .33s;
+    -o-transition: transform .33s;
+    transition: transform .33s; /* Animate the transform properties */
 
 	-webkit-transform-style: preserve-3d;
-	transform-style: preserve-3d; /* <-NB */
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d; /* <-NB */
 }
 
 /* The two faces of the cube */
@@ -84,7 +90,7 @@ body {
 	-webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     -ms-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
-	height: 400px;
+	/*height: 400px;*/
 }
 
 /* Position the faces */
@@ -112,3 +118,11 @@ body {
     -o-transform: rotateX(89deg);
     transform: rotateX(89deg); /* Text bleed at 90º */
 }
+
+svg,#graph-container {
+         height: 800px;
+      width:1000px;
+    position: relative;
+      overflow: hidden;
+      margin: 0px;
+  }

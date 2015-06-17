@@ -76,6 +76,27 @@ namespace ShowMeNow.API.Services
         /*
          * Creates a Node places
          */
+
+        public List<Place> GetAllPlaces()
+        {
+            List<Place> placeList = null;
+
+            try
+            {
+                placeList =
+                     this.InitializeNeo4J()
+                         .Cypher.Match("(aPlace:Place)")
+                         .Return(aPlace => aPlace.As<Place>())
+                         .Results.ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
+
+            return placeList;
+        }
+
         public NodeReference<Place> CreatePlace(Place aPlace)
         {
             NodeReference<Place> refPlaces = null;
@@ -91,6 +112,9 @@ namespace ShowMeNow.API.Services
             return refPlaces;
         }
 
+        /*
+         * Delete person node without relationship
+         */
         public bool DeletePerson(string name)
         {
             bool success = true;
@@ -109,11 +133,16 @@ namespace ShowMeNow.API.Services
             return success;
         }
 
+
         public void DeleteAllNodes()
         {
             throw new NotImplementedException();
         }
 
+
+        /*
+         * Delete person node and relationship
+         */
         public bool DeletePersonAndRelations(string name)
         {
             var success = true;
@@ -131,6 +160,7 @@ namespace ShowMeNow.API.Services
             }
             return success;
         }
+
 
         /*
          * Creates a friendship relation between two nodes
@@ -172,7 +202,6 @@ namespace ShowMeNow.API.Services
             {
                 logger.Error(e.Message);
             }
-
         }
 
         /*
@@ -244,5 +273,24 @@ namespace ShowMeNow.API.Services
             return listOfFriends;
         }
 
+        public List<Person> GetAllPeople()
+        {
+            List<Person> personList = null;
+
+            try
+            {
+                personList =
+                     this.InitializeNeo4J()
+                         .Cypher.Match("(aPerson:Person)")
+                         .Return(aPerson => aPerson.As<Person>())
+                         .Results.ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
+
+            return personList;
+        }
     }
 }

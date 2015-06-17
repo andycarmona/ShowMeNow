@@ -26,6 +26,10 @@
 
         List<Person> GetAllFriends(string name);
 
+        List<Person> GetAllPeople();
+
+        List<Place> GetAllPlaces();
+
         NodeReference<Place> CreatePlace(Place aPlace);
 
         bool DeletePerson(string name);

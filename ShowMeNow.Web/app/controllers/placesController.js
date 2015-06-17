@@ -3,6 +3,15 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
 
     $scope.places = [];
     //placesService.InitializeDataBase();
+    $scope.iframeHeight = window.innerHeight;
+    $scope.styleContainer = function () {
+        var style1 = "width: 400px;height:400px;";
+     
+            return style1;
+       
+    }
+
+  
 
     $scope.monthPickerConfig = {
         start: "year",

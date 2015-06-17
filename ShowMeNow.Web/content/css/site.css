@@ -120,8 +120,16 @@ body {
 }
 
 svg,#graph-container {
-         height: 800px;
-      width:1000px;
+         height: 500px;
+      width:500px;
+    position: relative;
+      overflow: hidden;
+      margin: 0px;
+  }
+
+.angular-leaflet-map,#map-container {
+         height: 500px;
+      width:500px;
     position: relative;
       overflow: hidden;
       margin: 0px;

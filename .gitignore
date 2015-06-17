@@ -216,3 +216,5 @@ pip-log.txt
 *.dll
 packages/
 ShowMeNow.API/Logs/log.txt
+*.png
+D3.js Tips and Tricks_ Tree diagrams in d3.js_files/

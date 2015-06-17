@@ -92,7 +92,7 @@
             {
                 Assert.IsNotNull(person);
                 Assert.IsInstanceOfType(person,typeof(Person));
-                DeletePerson(person.Name);
+              //  DeletePerson(person.Name);
             }
     }
 

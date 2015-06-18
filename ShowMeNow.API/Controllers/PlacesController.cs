@@ -15,6 +15,7 @@ namespace ShowMeNow.API.Controllers
     using System.Net.Http;
     using System.Web.Http;
     using ShowMeNow.API.Helpers;
+    using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Services;
 
     [RoutePrefix("api/Places")]
@@ -26,7 +27,7 @@ namespace ShowMeNow.API.Controllers
         public PlacesController()
         {
             ErrorHandler.InitializeMessageList();
-            _placeService = new PlacesServices();
+            _placeService = new PlacesService();
         }
 
         public PlacesController(IPlacesService placeService)
@@ -34,29 +35,7 @@ namespace ShowMeNow.API.Controllers
             _placeService = placeService;
         }
 
-        [Route("InitializeDatabase")]
-        [AcceptVerbs("GET")]
-        public HttpResponseMessage InitializeDatabase()
-        {
-            HttpResponseMessage response;
-            try
-            {
-                _placeService.InitializeNeo4J();
-                response = new HttpResponseMessage(HttpStatusCode.Accepted)
-                               {
-                                   Content =
-                                       new StringContent(
-                                       "Success!! You are connected to Neo4j database")
-                               };
-            }
-            catch (Exception e)
-            {
-                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
-                logger.Error(e.Message);
-            }
-
-            return response;
-        }
+    
 
         [Route("AddInitialPeople")]
         [AcceptVerbs("GET")]
@@ -65,7 +44,7 @@ namespace ShowMeNow.API.Controllers
             HttpResponseMessage response;
             try
             {
-                _placeService.InitializeNeo4J();
+               
           
                 response = new HttpResponseMessage(HttpStatusCode.Accepted)
                                {
@@ -90,9 +69,7 @@ namespace ShowMeNow.API.Controllers
             HttpResponseMessage response;
             try
             {
-                _placeService.GetAllFriends(name);
-                _placeService.InitializeNeo4J();
-               
+            //    _placeService.GetAllFriends(name);
                 response = new HttpResponseMessage(HttpStatusCode.Accepted)
                                {
                                    Content =

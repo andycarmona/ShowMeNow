@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IPlacesService.cs" company="Uni-app">
+// <copyright file="PlacesService.cs" company="Uni-app">
 //   
 // </copyright>
 // <summary>
@@ -9,12 +9,16 @@
 
 namespace ShowMeNow.API.Services
 {
+    using System;
     using System.Collections.Generic;
 
     using ShowMeNow.API.Models.Dto;
 
-    public interface IPlacesService
+    public class PlacesService : IPlacesService
     {
-    List<PersonPlaceDto> GetAllFriends(string name);
+        public List<PersonPlaceDto> GetAllFriends(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

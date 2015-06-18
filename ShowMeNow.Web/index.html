@@ -13,6 +13,7 @@
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="http://cdn.kendostatic.com/2014.2.716/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="http://cdn.kendostatic.com/2014.2.716/styles/kendo.default.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
     <style>
         .demo-section {
             width: 860px;
@@ -110,34 +111,12 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="page-header text-center">
-                <h1>Show me now</h1>
-            </div>
-            <p>Show me good places to go</p>
-        </div>
-    </div>
-
     <div class="container">
         <div data-ng-view="">
         </div>
     </div>
 
-    <hr />
-
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="text-muted">Created by Taiseer Joudeh. Twitter: <a target="_blank" href="http://twitter.com/tjoudeh">@tjoudeh</a></p>
-                </div>
-                <div class="col-md-6">
-                    <p class="text-muted">Taiseer Joudeh Blog: <a target="_blank" href="http://bitoftech.net">bitoftech.net</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     <!-- 3rd party libraries -->
     <script src="http://cdn.kendostatic.com/2014.2.716/js/jquery.min.js"></script>
@@ -147,8 +126,12 @@
     <script src="scripts/loading-bar.min.js"></script>
     <script src="scripts/kendo.custom.min.js"></script>
     <script src="http://cdn.jsdelivr.net/snap.svg/0.1.0/snap.svg.js"></script>
-    
-
+    <script src="scripts/sigma.min.js"></script>
+    <script src="scripts/vivagraph.min.js"></script>
+    <script src="scripts/d3.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+ 
+   
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
 
@@ -171,7 +154,10 @@
 
     <!-- Load custom filters -->
     <!-- Load custom directives -->
-    <script src="app/directives/SvgDirectives.js"></script>
-
+    <script src="app/directives/SnapSvgDirectives.js"></script>
+    <script src="app/directives/SigmaDirectives.js"></script>
+    <script src="app/directives/VivaGraphDirectives.js"></script>
+    <script src="app/directives/D3Directives.js"></script>
+    <script src="scripts/angular-leaflet-directive.min.js"></script>
 </body>
 </html>

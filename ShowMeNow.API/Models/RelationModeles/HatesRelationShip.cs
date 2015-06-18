@@ -1,4 +1,13 @@
-﻿namespace ShowMeNow.API.Models.RelationModeles
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HatesRelationShip.cs" company="uni-app">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ShowMeNow.API.Models.RelationModeles
 {
     using Neo4jClient;
 

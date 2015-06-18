@@ -3,6 +3,25 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
 
     $scope.places = [];
     //placesService.InitializeDataBase();
+    $scope.iframeHeight = window.innerHeight;
+    $scope.iframeWidth = window.innerWidth;
+    $scope.styleContainer = function () {
+        var style1 = "width: 400px;height:400px;";
+     
+            return style1;
+       
+    }
+
+    angular.extend($scope, {
+        center: {
+            lat: 40.095,
+            lng: -3.823,
+            zoom: 4
+        },
+        defaults: {
+            scrollWheelZoom: false
+        }
+    });
 
     $scope.monthPickerConfig = {
         start: "year",

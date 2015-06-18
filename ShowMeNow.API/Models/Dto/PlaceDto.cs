@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ShowMeNow.API.Models.RelationModeles
+namespace ShowMeNow.API.Models.Dto
 {
-    public class Place
+    public class PlaceDto
     {
         public int PlaceId { get; set; }
 

@@ -7,11 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ShowMeNow.API.Models.RelationModeles
+namespace ShowMeNow.API.Models.Dto
 {
-    using System;
-
-    public class Person
+    public class PersonPlaceDto
     {
         public int PersonId { get; set; }
 
@@ -20,6 +18,8 @@ namespace ShowMeNow.API.Models.RelationModeles
         public int Age { get; set; }
 
         public string Email { get; set; }
+
+
      
     }
 }

@@ -11,9 +11,9 @@ namespace ShowMeNow.API.Models.RelationModeles
 {
     using System;
 
-    public class Person
+    public class Friend
     {
-        public int PersonId { get; set; }
+        public int FriendId { get; set; }
 
         public string Name { get; set; }
 

@@ -157,6 +157,10 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Models\RelationModeles\Feedback.cs" />
+    <Compile Include="Models\Dto\FeedbackDto.cs" />
+    <Compile Include="Models\Dto\PersonPlaceDto.cs" />
+    <Compile Include="Models\Dto\PlaceDto.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Helper.cs" />
@@ -170,6 +174,7 @@
     <Compile Include="Models\ExternalLoginModels.cs" />
     <Compile Include="Models\RelationModeles\HatesRelationShip.cs" />
     <Compile Include="Models\RelationModeles\KnowsRelationShip.cs" />
+    <Compile Include="Models\RelationModeles\Friend.cs" />
     <Compile Include="Models\RelationModeles\Person.cs" />
     <Compile Include="Models\RelationModeles\HatesData.cs" />
     <Compile Include="Models\RelationModeles\Place.cs" />
@@ -180,8 +185,10 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Repositories\IPlacesRepository.cs" />
+    <Compile Include="Repositories\PlacesRepository.cs" />
     <Compile Include="Services\IPlacesService.cs" />
-    <Compile Include="Services\PlacesServices.cs" />
+    <Compile Include="Services\PlacesService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

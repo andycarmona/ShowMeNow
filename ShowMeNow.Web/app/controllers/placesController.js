@@ -4,6 +4,7 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
     $scope.places = [];
     //placesService.InitializeDataBase();
     $scope.iframeHeight = window.innerHeight;
+    $scope.iframeWidth = window.innerWidth;
     $scope.styleContainer = function () {
         var style1 = "width: 400px;height:400px;";
      

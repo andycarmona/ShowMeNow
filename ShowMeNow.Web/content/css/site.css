@@ -9,7 +9,7 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
       padding-top: 40px;
-  xpadding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 
@@ -79,7 +79,7 @@ body {
 }
 
 /* The two faces of the cube */
-.frontFace,.backFace {
+#map-container,.frontFace,.backFace {
     background: rgb(247, 247, 247);
 	border: 1px solid rgba(147, 184, 189, .8);
 
@@ -92,7 +92,9 @@ body {
     box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
 	/*height: 400px;*/
 }
-
+#map-container {
+    position: absolute;
+}
 /* Position the faces */
 .frontFace {
     -webkit-transform: translateZ(50px);
@@ -120,19 +122,22 @@ body {
 }
 
 svg,#graph-container {
-         height: 500px;
-      width:500px;
-    position: relative;
-      overflow: hidden;
-      margin: 0px;
+   height: 500px;
+  width: 500px;
+  position: relative;
+  top: 0px;
+  overflow: hidden;
+  margin: 0px;
+  z-index: 1;
   }
 
 .angular-leaflet-map,#map-container {
          height: 500px;
-      width:500px;
-    position: relative;
-      overflow: hidden;
-      margin: 0px;
+  width: 500px;
+  position: absolute;
+  overflow: hidden;
+  margin: 0px;
+  top: 0px;
   }
 
  .node circle {

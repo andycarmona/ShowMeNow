@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ShowMeNow.API.Services
+namespace ShowMeNow.API.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -16,8 +16,9 @@ namespace ShowMeNow.API.Services
     using Neo4jClient;
 
     using ShowMeNow.API.Models.RelationModeles;
+    using ShowMeNow.API.Services;
 
-    public class PlacesServices : IPlacesService
+    public class PlacesRepository : IPlacesRepository
     {
 
         private readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -56,18 +57,24 @@ namespace ShowMeNow.API.Services
         public Person CreatePerson(Person aPerson)
         {
             Person refPerson = null;
+            var existPerson = GetAPerson(aPerson.Name);
+
+            if (existPerson.Count >= 1)
+            {
+                return refPerson;
+            }
+
             try
             {
-                refPerson = this._neo4jClient.Cypher
-                .Create("(p:Person {param})")
-                .WithParam("param", aPerson)
-                .Return<Person>("p")
-                 .Results
-                .Single();
+                refPerson =
+                    this._neo4jClient.Cypher.Create("(p:Person {param})")
+                        .WithParam("param", aPerson)
+                        .Return<Person>("p")
+                        .Results.Single();
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
             return refPerson;
@@ -91,33 +98,78 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
             return placeList;
         }
 
-        public NodeReference<Place> CreatePlace(Place aPlace)
+        public Place CreatePlace(Place aPlace)
         {
-            NodeReference<Place> refPlaces = null;
+            Place refPlace = null;
             try
             {
-                refPlaces = this._neo4jClient.Create(aPlace);
+                refPlace = this._neo4jClient.Cypher
+                .Create("(p:Place {param})")
+                .WithParam("param", aPlace)
+                .Return<Place>("p")
+                 .Results
+                .Single();
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
-            return refPlaces;
+            return refPlace;
         }
 
         /*
          * Delete person node without relationship
          */
-        public bool DeletePerson(string name)
+        public void DeletePerson(string name)
+        {
+           
+            var result
+                = this.GetAllFriends(name);
+            try
+            {
+                if (result.Count < 1)
+                {
+                    this.DeleteOrphanPerson(name);
+                }
+                else
+                {
+                    this.DeletePersonWithRelations(name);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                this.DeleteOrphanPerson(name);
+            }
+        }
+
+        public bool DeletePlace(string name)
         {
             bool success = true;
+            try
+            {
+                this._neo4jClient.Cypher.Match("(aPlace:Place)")
+                    .Where((Place aPlace) => aPlace.Name == name)
+                    .Delete("aPlace")
+                    .ExecuteWithoutResults();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message);
+                success = false;
+            }
+            return success;
+        }
+
+        public bool DeleteOrphanPerson(string name)
+        {
+           bool success = true;
             try
             {
                 this._neo4jClient.Cypher.Match("(aPerson:Person)")
@@ -127,23 +179,20 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
                 success = false;
             }
             return success;
         }
 
-
         public void DeleteAllNodes()
         {
             throw new NotImplementedException();
         }
-
-
         /*
          * Delete person node and relationship
          */
-        public bool DeletePersonAndRelations(string name)
+        public bool DeletePersonWithRelations(string name)
         {
             var success = true;
             try
@@ -155,13 +204,11 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
                 success = false;
             }
             return success;
         }
-
-
         /*
          * Creates a friendship relation between two nodes
          */
@@ -178,7 +225,7 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
         }
 
@@ -200,10 +247,9 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
         }
-
         /*
          * Get all people by label
          */
@@ -220,12 +266,11 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
             return peopleByLabel;
         }
-
         /*
          * Get a person by personId property
          */
@@ -244,12 +289,32 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
             return personList;
         }
 
+        public List<Place> GetAPlace(string name)
+        {
+            List<Place> placeList = null;
+
+            try
+            {
+                placeList =
+                     this.InitializeNeo4J()
+                         .Cypher.Match("(aPlace:Place)")
+                         .Where((Place aPlace) => aPlace.Name == name)
+                         .Return(aPlace => aPlace.As<Place>())
+                         .Results.ToList();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message);
+            }
+
+            return placeList;
+        }
         /*
          * Gets all people whith a friendship relation with a person
          */
@@ -258,18 +323,21 @@ namespace ShowMeNow.API.Services
             List<Person> listOfFriends = null;
             try
             {
-                listOfFriends =
-                    this.InitializeNeo4J()
-                        .Cypher.Match("(aPerson:Person)-[:FRIENDS_WITH]->()")
-                        .Where((Person aPerson) => aPerson.Name == name)
-                        .Return(aPerson => aPerson.As<Person>())
-                        .Results.ToList();
+                listOfFriends = this.InitializeNeo4J()
+                    .Cypher.OptionalMatch("(user:Person)-[FRIENDS_WITH]->(friend:Person)")
+                    .Return((user, friend) => new { User = user.As<Person>(), Friends = friend.CollectAs<Person>() })
+                    .Results.Select(result => new Person()
+                                                  {
+                                                      Name = result.User.Name,
+                                                      Email = result.User.Email,
+                                                      Age = result.User.Age,
+                                                      PersonId = result.User.PersonId
+                                                  }).Distinct().ToList();
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
-
             return listOfFriends;
         }
 
@@ -287,7 +355,7 @@ namespace ShowMeNow.API.Services
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                this.logger.Error(e.Message);
             }
 
             return personList;

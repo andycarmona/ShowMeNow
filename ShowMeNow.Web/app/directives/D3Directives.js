@@ -14,16 +14,8 @@
               {
                   "name": "Son of A",
                   "parent": "Level 2: A"
-              },
-              {
-                  "name": "Daughter of A",
-                  "parent": "Level 2: A"
               }
             ]
-        },
-        {
-            "name": "Level 2: B",
-            "parent": "Top Level"
         }
       ]
   }

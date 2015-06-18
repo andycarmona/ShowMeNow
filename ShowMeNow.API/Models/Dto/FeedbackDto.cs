@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Person.cs" company="Uni-app">
+// <copyright file="Feedback.cs" company="ui-app.se">
 //   
 // </copyright>
 // <summary>
@@ -7,19 +7,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ShowMeNow.API.Models.RelationModeles
+namespace ShowMeNow.API.Models.Dto
 {
-    using System;
-
-    public class Person
+    public class FeedbackDto
     {
-        public int PersonId { get; set; }
+        public int FeedbackId { get; set; }
 
-        public string Name { get; set; }
+        public int positivePunctuation { get; set; }
 
-        public int Age { get; set; }
+        public int negativePunctuation { get; set; }
 
-        public string Email { get; set; }
-     
+        public string Comments { get; set; }
     }
 }

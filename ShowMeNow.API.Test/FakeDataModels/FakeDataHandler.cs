@@ -35,6 +35,12 @@
             return aFeedback;
         }
 
+        public Itinerary GetItinerary()
+        {
+            var aItinerary = new Itinerary() { ItineraryId = 2, Name = "loco viaje" };
+            return aItinerary;
+        }
+
         public List<Person> GetListOfPeople()
         {
            List<Person> listOfPeople;

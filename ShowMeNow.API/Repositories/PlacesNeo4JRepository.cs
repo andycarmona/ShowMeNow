@@ -18,7 +18,7 @@ namespace ShowMeNow.API.Repositories
     using ShowMeNow.API.Models.RelationModeles;
     using ShowMeNow.API.Services;
 
-    public class PlacesRepository : IPlacesRepository
+    public class PlacesNeo4JRepository : IPlacesNeo4JRepository
     {
 
         private readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -54,6 +54,33 @@ namespace ShowMeNow.API.Repositories
         /*
          * Creates a node Person in graph
          */
+
+        public void AddNodeToLinkedList()
+        {
+            var refNewNode;
+            try
+            {
+                refNewNode =
+                    this._neo4jClient.Cypher
+                    .Match("(root)-[:LINK*0..]->(before),(after)-[:LINK*0..]->(root),(before)-[old:LINK]->(after)")
+                    .Where((Itinerary root) => root.Name == "ROOT")
+                    .AndWhere((Itinerary before) => before.ItineraryId == "ROOT")
+                    .Create("(p:Person {param})")
+                        .WithParam("param", aPerson)
+                        .Return<Person>("p")
+                        .Results.Single();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message);
+            }
+     
+WHERE root.name = 'ROOT' AND (before.value < 25 OR before = root) AND (25 < after.value OR after =
+  root)
+CREATE UNIQUE (before)-[:LINK]->({ value:25 })-[:LINK]->(after)
+DELETE old
+        }
+
         public Person CreatePerson(Person aPerson)
         {
             Person refPerson = null;
@@ -61,7 +88,7 @@ namespace ShowMeNow.API.Repositories
 
             if (existPerson.Count >= 1)
             {
-                return refPerson;
+                return null;
             }
 
             try
@@ -104,6 +131,29 @@ namespace ShowMeNow.API.Repositories
             return placeList;
         }
 
+        public Itinerary CreateLinkedList(Itinerary aItinerary)
+        {
+            Itinerary refItinerary = null;
+            try
+            {
+                refItinerary =
+                    this._neo4jClient.Cypher
+                    .Create("(root:Place {param})-[:LINK]->(root)")
+                        .WithParam("param", aItinerary)
+                         .Return<Itinerary>("root")
+                        .Results
+                        .Single();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message);
+
+            }
+            return refItinerary;
+        }
+
+
+
         public Place CreatePlace(Place aPlace)
         {
             Place refPlace = null;
@@ -129,7 +179,7 @@ namespace ShowMeNow.API.Repositories
          */
         public void DeletePerson(string name)
         {
-           
+
             var result
                 = this.GetAllFriends(name);
             try
@@ -169,7 +219,7 @@ namespace ShowMeNow.API.Repositories
 
         public bool DeleteOrphanPerson(string name)
         {
-           bool success = true;
+            bool success = true;
             try
             {
                 this._neo4jClient.Cypher.Match("(aPerson:Person)")
@@ -189,6 +239,9 @@ namespace ShowMeNow.API.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+
         /*
          * Delete person node and relationship
          */

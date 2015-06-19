@@ -9,14 +9,20 @@
 
 namespace ShowMeNow.API.Models.RelationModeles
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Place
     {
+        [Key]
         public int PlaceId { get; set; }
+
 
         public double Coordinates { get; set; }
 
+          [MaxLength(40)]
         public string Name { get; set; }
 
+          [MaxLength(40)]
         public string Address { get; set; }
 
         public int FeedbackId { get; set; }
@@ -25,7 +31,8 @@ namespace ShowMeNow.API.Models.RelationModeles
 
         public string EMail { get; set; }
 
-           public string ParentName { get; set; }
+        public string ParentName { get; set; }
 
+    
     }
 }

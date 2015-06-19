@@ -7,6 +7,8 @@ namespace AngularJSAuthentication.API.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+    using ShowMeNow.API;
+
     internal sealed class Configuration : DbMigrationsConfiguration<AuthContext>
     {
         public Configuration()

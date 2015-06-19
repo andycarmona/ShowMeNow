@@ -157,6 +157,30 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Migrations\201506181605204_CreateItineraryTable.cs" />
+    <Compile Include="Migrations\201506181605204_CreateItineraryTable.Designer.cs">
+      <DependentUpon>201506181605204_CreateItineraryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506181609070_AddPlaceIdItineraryTable.cs" />
+    <Compile Include="Migrations\201506181609070_AddPlaceIdItineraryTable.Designer.cs">
+      <DependentUpon>201506181609070_AddPlaceIdItineraryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506181620084_AddPlaceIdListItineraryTable.cs" />
+    <Compile Include="Migrations\201506181620084_AddPlaceIdListItineraryTable.Designer.cs">
+      <DependentUpon>201506181620084_AddPlaceIdListItineraryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506181622449_AddPlaceIdListItineraryTabledwwd.cs" />
+    <Compile Include="Migrations\201506181622449_AddPlaceIdListItineraryTabledwwd.Designer.cs">
+      <DependentUpon>201506181622449_AddPlaceIdListItineraryTabledwwd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506181623470_AddPlaceIdListItineraryTabledwwddfsd.cs" />
+    <Compile Include="Migrations\201506181623470_AddPlaceIdListItineraryTabledwwddfsd.Designer.cs">
+      <DependentUpon>201506181623470_AddPlaceIdListItineraryTabledwwddfsd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506181626122_AddPlaceIdListItineraryTabledNewAdd.cs" />
+    <Compile Include="Migrations\201506181626122_AddPlaceIdListItineraryTabledNewAdd.Designer.cs">
+      <DependentUpon>201506181626122_AddPlaceIdListItineraryTabledNewAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\RelationModeles\Feedback.cs" />
     <Compile Include="Models\Dto\FeedbackDto.cs" />
     <Compile Include="Models\Dto\PersonPlaceDto.cs" />
@@ -173,6 +197,7 @@
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ExternalLoginModels.cs" />
     <Compile Include="Models\RelationModeles\HatesRelationShip.cs" />
+    <Compile Include="Models\RelationModeles\Itinerary.cs" />
     <Compile Include="Models\RelationModeles\KnowsRelationShip.cs" />
     <Compile Include="Models\RelationModeles\Friend.cs" />
     <Compile Include="Models\RelationModeles\Person.cs" />
@@ -185,8 +210,8 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
-    <Compile Include="Repositories\IPlacesRepository.cs" />
-    <Compile Include="Repositories\PlacesRepository.cs" />
+    <Compile Include="Repositories\IPlacesNeo4JRepository.cs" />
+    <Compile Include="Repositories\PlacesNeo4JRepository.cs" />
     <Compile Include="Services\IPlacesService.cs" />
     <Compile Include="Services\PlacesService.cs" />
     <Compile Include="Startup.cs" />
@@ -209,6 +234,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201407121205456_AddClientsAndRefreshTokenTables.resx">
       <DependentUpon>201407121205456_AddClientsAndRefreshTokenTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181605204_CreateItineraryTable.resx">
+      <DependentUpon>201506181605204_CreateItineraryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181609070_AddPlaceIdItineraryTable.resx">
+      <DependentUpon>201506181609070_AddPlaceIdItineraryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181620084_AddPlaceIdListItineraryTable.resx">
+      <DependentUpon>201506181620084_AddPlaceIdListItineraryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181622449_AddPlaceIdListItineraryTabledwwd.resx">
+      <DependentUpon>201506181622449_AddPlaceIdListItineraryTabledwwd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181623470_AddPlaceIdListItineraryTabledwwddfsd.resx">
+      <DependentUpon>201506181623470_AddPlaceIdListItineraryTabledwwddfsd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506181626122_AddPlaceIdListItineraryTabledNewAdd.resx">
+      <DependentUpon>201506181626122_AddPlaceIdListItineraryTabledNewAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

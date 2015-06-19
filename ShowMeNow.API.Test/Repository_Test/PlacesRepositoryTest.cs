@@ -16,12 +16,12 @@
     [TestClass]
     public class PlacesRepositoryTest
     {
-        private IPlacesRepository _placeRepository;
+        private IPlacesNeo4JRepository _placeRepository;
         private FakeDataHandler aFakeModel;
 
         public void InitializeDB()
         {
-            this._placeRepository = new PlacesRepository();
+            this._placeRepository = new PlacesNeo4JRepository();
             aFakeModel = new FakeDataHandler();
             this._placeRepository.InitializeNeo4J();
         }
@@ -72,7 +72,7 @@
         }
 
         [TestMethod]
-        public void Test_Creating_Relations_between_People()
+        public void Test_Creating_And_Deleting_People_with_Relations()
         {
             InitializeDB();
             var listPeople = aFakeModel.GetListOfPeople();
@@ -105,10 +105,24 @@
             Assert.AreEqual(qtyBeforeDel, qtyAfterDel + 1);
         }
 
+        [TestMethod]
+        public void Test_Creating_And_Deleting_one_person()
+        {
+            InitializeDB();
+            var listPeople = aFakeModel.GetListOfPeople();
+        
+                this._placeRepository.CreatePerson(listPeople[0]);
+
+            var qtyBeforeDel = _placeRepository.GetAllPeople().Count;
+            _placeRepository.DeletePerson(listPeople[0].Name);
+            var qtyAfterDel = _placeRepository.GetAllPeople().Count;
+            Assert.AreEqual(qtyBeforeDel, qtyAfterDel + 1);
+        }
+
 
 
         [TestMethod]
-        public void Test_Create_Places_And_Relations()
+        public void Test_Create_a_Place()
         {
             this.InitializeDB();
             var place1 = aFakeModel.GetPlace();
@@ -116,6 +130,18 @@
             var resultPlace = this._placeRepository.GetAPlace(place1.Name);
             Assert.AreEqual(place1.Name, resultPlace[0].Name);
             this._placeRepository.DeletePlace(place1.Name);
+            resultPlace = this._placeRepository.GetAPlace(place1.Name);
+            Assert.AreEqual(0 ,resultPlace.Count);
+        }
+
+        [TestMethod]
+        public void Test_Create_LinkedList()
+        {
+            this.InitializeDB();
+            var itinerary1 = aFakeModel.GetItinerary();
+            var aItineray = _placeRepository.CreateLinkedList(itinerary1);
+
+            
         }
 
         [TestMethod]

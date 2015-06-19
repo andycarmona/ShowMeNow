@@ -6,12 +6,15 @@
 
     using ShowMeNow.API.Models.RelationModeles;
 
-    public interface IPlacesRepository
+    public interface IPlacesNeo4JRepository
     {
         GraphClient InitializeNeo4J();
 
         void UpdateNodeProperties(int nodeId, string name);
 
+        Itinerary CreateLinkedList(Itinerary aItinerary);
+
+        void AddNodeToLinkedList();
 
         Person CreatePerson(Person aPerson);
 

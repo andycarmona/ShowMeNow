@@ -57,28 +57,28 @@ namespace ShowMeNow.API.Repositories
 
         public void AddNodeToLinkedList()
         {
-            var refNewNode;
-            try
-            {
-                refNewNode =
-                    this._neo4jClient.Cypher
-                    .Match("(root)-[:LINK*0..]->(before),(after)-[:LINK*0..]->(root),(before)-[old:LINK]->(after)")
-                    .Where((Itinerary root) => root.Name == "ROOT")
-                    .AndWhere((Itinerary before) => before.ItineraryId == "ROOT")
-                    .Create("(p:Person {param})")
-                        .WithParam("param", aPerson)
-                        .Return<Person>("p")
-                        .Results.Single();
-            }
-            catch (Exception e)
-            {
-                this.logger.Error(e.Message);
-            }
+//            var refNewNode;
+//            try
+//            {
+//                refNewNode =
+//                    this._neo4jClient.Cypher
+//                    .Match("(root)-[:LINK*0..]->(before),(after)-[:LINK*0..]->(root),(before)-[old:LINK]->(after)")
+//                    .Where((Itinerary root) => root.Name == "ROOT")
+//                    .AndWhere((Itinerary before) => before.ItineraryId == "ROOT")
+//                    .Create("(p:Person {param})")
+//                        .WithParam("param", aPerson)
+//                        .Return<Person>("p")
+//                        .Results.Single();
+//            }
+//            catch (Exception e)
+//            {
+//                this.logger.Error(e.Message);
+//            }
      
-WHERE root.name = 'ROOT' AND (before.value < 25 OR before = root) AND (25 < after.value OR after =
-  root)
-CREATE UNIQUE (before)-[:LINK]->({ value:25 })-[:LINK]->(after)
-DELETE old
+//WHERE root.name = 'ROOT' AND (before.value < 25 OR before = root) AND (25 < after.value OR after =
+//  root)
+//CREATE UNIQUE (before)-[:LINK]->({ value:25 })-[:LINK]->(after)
+//DELETE old
         }
 
         public Person CreatePerson(Person aPerson)

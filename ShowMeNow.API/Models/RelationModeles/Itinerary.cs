@@ -19,5 +19,7 @@ namespace ShowMeNow.API.Models.RelationModeles
 
         [MaxLength(40)]
         public string Name { get; set; }
+
+        public int Value { get; set; }
     }
 }

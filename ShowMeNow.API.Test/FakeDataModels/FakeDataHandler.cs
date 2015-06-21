@@ -37,7 +37,7 @@
 
         public Itinerary GetItinerary()
         {
-            var aItinerary = new Itinerary() { ItineraryId = 2, Name = "loco viaje" };
+            var aItinerary = new Itinerary() { ItineraryId = 2, Name = "loco viaje",Value=25 };
             return aItinerary;
         }
 

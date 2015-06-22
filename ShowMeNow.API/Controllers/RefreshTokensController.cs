@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-
-namespace AngularJSAuthentication.API.Controllers
+﻿namespace ShowMeNow.API.Controllers
 {
+    using System.Threading.Tasks;
+    using System.Web.Http;
+
+    using AngularJSAuthentication.API;
+
     [RoutePrefix("api/RefreshTokens")]
     public class RefreshTokensController : ApiController
     {
@@ -16,14 +13,14 @@ namespace AngularJSAuthentication.API.Controllers
 
         public RefreshTokensController()
         {
-            _repo = new AuthRepository();
+            this._repo = new AuthRepository();
         }
 
         [Authorize(Users="Admin")]
         [Route("")]
         public IHttpActionResult Get()
         {
-            return Ok(_repo.GetAllRefreshTokens());
+            return this.Ok(this._repo.GetAllRefreshTokens());
         }
 
         //[Authorize(Users = "Admin")]
@@ -31,12 +28,12 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("")]
         public async Task<IHttpActionResult> Delete(string tokenId)
         {
-            var result = await _repo.RemoveRefreshToken(tokenId);
+            var result = await this._repo.RemoveRefreshToken(tokenId);
             if (result)
             {
-                return Ok();
+                return this.Ok();
             }
-            return BadRequest("Token Id does not exist");
+            return this.BadRequest("Token Id does not exist");
             
         }
 
@@ -44,7 +41,7 @@ namespace AngularJSAuthentication.API.Controllers
         {
             if (disposing)
             {
-                _repo.Dispose();
+                this._repo.Dispose();
             }
 
             base.Dispose(disposing);

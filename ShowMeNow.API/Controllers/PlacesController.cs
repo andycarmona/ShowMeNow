@@ -10,6 +10,7 @@
 namespace ShowMeNow.API.Controllers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
@@ -21,21 +22,16 @@ namespace ShowMeNow.API.Controllers
     [RoutePrefix("api/Places")]
     public class PlacesController : ApiController
     {
-        private readonly IPlacesService _placeService;
+        private readonly IEntityService _placeService;
+
         private readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public PlacesController()
         {
             ErrorHandler.InitializeMessageList();
-            _placeService = new PlacesService();
+            _placeService = new EntityService();
         }
 
-        public PlacesController(IPlacesService placeService)
-        {
-            _placeService = placeService;
-        }
-
-    
 
         [Route("AddInitialPeople")]
         [AcceptVerbs("GET")]
@@ -44,8 +40,6 @@ namespace ShowMeNow.API.Controllers
             HttpResponseMessage response;
             try
             {
-               
-          
                 response = new HttpResponseMessage(HttpStatusCode.Accepted)
                                {
                                    Content =
@@ -58,32 +52,26 @@ namespace ShowMeNow.API.Controllers
                 response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
                 logger.Error(e.Message);
             }
-
             return response;
         }
 
         [Route("GetAllPeople")]
         [AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllFriends(string name)
+        public IEnumerable GetAllFriends(string name)
         {
             HttpResponseMessage response;
+            IEnumerable listOfFriends = null;
             try
             {
-            //    _placeService.GetAllFriends(name);
-                response = new HttpResponseMessage(HttpStatusCode.Accepted)
-                               {
-                                   Content =
-                                       new StringContent(
-                                       "Success!! You created new people in DB")
-                               };
+                listOfFriends = _placeService.GetAllFriends(name);
             }
             catch (Exception e)
             {
-                response = new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent(e.Message) };
+      
                 logger.Error(e.Message);
             }
 
-            return response;
+            return listOfFriends;
         }
 
         // GET: api/Places

@@ -19,7 +19,12 @@
 
                                 </div>
                                 <div id="map-container">
-                                    <leaflet></leaflet>
+                                    <!--<leaflet></leaflet>-->
+                                    <map center="current-location" zoom="18">
+                                        <info-window position="current-location" visible="true">
+                                            <span>You are here.</span>
+                                        </info-window>
+                                    </map>
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -9,7 +9,7 @@
 
 namespace ShowMeNow.API.Models.Dto
 {
-    public class PersonPlaceDto
+    public class PersonDto
     {
         public int PersonId { get; set; }
 
@@ -18,8 +18,6 @@ namespace ShowMeNow.API.Models.Dto
         public int Age { get; set; }
 
         public string Email { get; set; }
-
-
      
     }
 }

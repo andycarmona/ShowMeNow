@@ -189,7 +189,7 @@
     </Compile>
     <Compile Include="Models\RelationModeles\Feedback.cs" />
     <Compile Include="Models\Dto\FeedbackDto.cs" />
-    <Compile Include="Models\Dto\PersonPlaceDto.cs" />
+    <Compile Include="Models\Dto\PersonDto.cs" />
     <Compile Include="Models\Dto\PlaceDto.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
@@ -220,10 +220,8 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Repositories\IPlacesNeo4JRepository.cs" />
     <Compile Include="Repositories\PlacesNeo4JRepository.cs" />
-    <Compile Include="Services\IPeopleService.cs" />
-    <Compile Include="Services\IPlacesService.cs" />
-    <Compile Include="Services\PeopleService.cs" />
-    <Compile Include="Services\PlacesService.cs" />
+    <Compile Include="Services\IEntityService.cs" />
+    <Compile Include="Services\EntityService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

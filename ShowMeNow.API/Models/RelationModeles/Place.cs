@@ -9,13 +9,24 @@
 
 namespace ShowMeNow.API.Models.RelationModeles
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     public class Place
     {
-        [Key]
-        public int PlaceId { get; set; }
+        public enum TypeOfPlace
+        {
+            Restaurant,
+            Museum,
+            Disco,
+            Bar,
+            Cinema
+        };
 
+        [Key]
+        public Guid PlaceId { get; set; }
+
+        public TypeOfPlace Type { get; set; }
 
         public double Coordinates { get; set; }
 

@@ -38,106 +38,80 @@ namespace ShowMeNow.API.Repositories
         /*
          *Update nodes properties , find by node id
          */
-        public void UpdateNodeProperties(int nodeId, string name)
+        public void UpdatePersonProperties(Guid personId, Person personData)
         {
-            var nodeReference = (NodeReference<Person>)nodeId;
-            this._neo4jClient.Update(
-                nodeReference,
-                node =>
-                {
-                    node.Name = name;
-                });
+            
+            this._neo4jClient.Cypher
+                 .Match("(aPerson:Person)")
+                .Where((Person aPerson) => aPerson.PersonId == personId)
+                .Set("aPerson = {properties}")
+                .WithParam("properties", new Person{PersonId = personId, Age = personData.Age, Email = personData.Email, Name = personData.Name })
+                .ExecuteWithoutResults();
         }
 
-
-        /*
-         * Creates a node Person in graph
-         */
-
-        public void AddNodeToLinkedList()
+        public void UpdatePersonName(Guid personId, string name)
         {
-//            var refNewNode;
-//            try
-//            {
-//                refNewNode =
-//                    this._neo4jClient.Cypher
-//                    .Match("(root)-[:LINK*0..]->(before),(after)-[:LINK*0..]->(root),(before)-[old:LINK]->(after)")
-//                    .Where((Itinerary root) => root.Name == "ROOT")
-//                    .AndWhere((Itinerary before) => before.ItineraryId == "ROOT")
-//                    .Create("(p:Person {param})")
-//                        .WithParam("param", aPerson)
-//                        .Return<Person>("p")
-//                        .Results.Single();
-//            }
-//            catch (Exception e)
-//            {
-//                this.logger.Error(e.Message);
-//            }
-     
-//WHERE root.name = 'ROOT' AND (before.value < 25 OR before = root) AND (25 < after.value OR after =
-//  root)
-//CREATE UNIQUE (before)-[:LINK]->({ value:25 })-[:LINK]->(after)
-//DELETE old
+            this._neo4jClient.Cypher
+                .Match("(aPerson:Person)")
+                .Where((Person aPerson) => aPerson.PersonId == personId)
+                .Set("aPerson.Name = {name}")
+                .WithParam("name", name)
+                .ExecuteWithoutResults();
         }
 
-        public Person CreatePerson(Person aPerson)
+        public void CreatePerson(Person aPerson)
         {
-            Person refPerson = null;
-            var existPerson = GetAPerson(aPerson.Name);
+            var existPerson = GetAPerson(aPerson.PersonId);
 
-            if (existPerson.Count >= 1)
+            if (existPerson.Count != 0)
             {
-                return null;
+                return;
             }
 
             try
             {
-                refPerson =
-                    this._neo4jClient.Cypher.Create("(p:Person {param})")
-                        .WithParam("param", aPerson)
-                        .Return<Person>("p")
-                        .Results.Single();
+                this._neo4jClient.Cypher.Create("(p:Person {param})")
+                    .WithParam("param", aPerson)
+                    .ExecuteWithoutResults();
             }
             catch (Exception e)
             {
                 this.logger.Error(e.Message);
             }
-
-            return refPerson;
         }
 
         /*
          * Delete person node without relationship
          */
-        public void DeletePerson(string name)
+        public void DeletePerson(Guid personId)
         {
 
             var result
-                = this.GetAllFriends(name);
+                = this.GetAllFriends(personId);
             try
             {
                 if (result.Count < 1)
                 {
-                    this.DeleteOrphanPerson(name);
+                    this.DeleteOrphanPerson(personId);
                 }
                 else
                 {
-                    this.DeletePersonWithRelations(name);
+                    this.DeletePersonWithRelations(personId);
                 }
             }
             catch (NullReferenceException)
             {
-                this.DeleteOrphanPerson(name);
+                this.DeleteOrphanPerson(personId);
             }
         }
 
-        public bool DeleteOrphanPerson(string name)
+        public bool DeleteOrphanPerson(Guid personId)
         {
             bool success = true;
             try
             {
                 this._neo4jClient.Cypher.Match("(aPerson:Person)")
-                    .Where((Person aPerson) => aPerson.Name == name)
+                    .Where((Person aPerson) => aPerson.PersonId == personId)
                     .Delete("aPerson")
                     .ExecuteWithoutResults();
             }
@@ -153,19 +127,16 @@ namespace ShowMeNow.API.Repositories
         {
             throw new NotImplementedException();
         }
-
-
-
         /*
          * Delete person node and relationship
          */
-        public bool DeletePersonWithRelations(string name)
+        public bool DeletePersonWithRelations(Guid personId)
         {
             var success = true;
             try
             {
                 this._neo4jClient.Cypher.OptionalMatch("(aPerson:Person)-[r]->()")
-                    .Where((Person aPerson) => aPerson.Name == name)
+                    .Where((Person aPerson) => aPerson.PersonId == personId)
                     .Delete("r, aPerson")
                     .ExecuteWithoutResults();
             }
@@ -185,8 +156,8 @@ namespace ShowMeNow.API.Repositories
             {
                 this._neo4jClient.Cypher
                     .Match("(person1:Person)", "(person2:Person)")
-                    .Where((Person person1) => person1.Name == firstPerson.Name)
-                    .AndWhere((Person person2) => person2.Name == secondPerson.Name)
+                    .Where((Person person1) => person1.PersonId == firstPerson.PersonId)
+                    .AndWhere((Person person2) => person2.PersonId == secondPerson.PersonId)
                     .CreateUnique("person1-[:FRIENDS_WITH]->person2")
                     .ExecuteWithoutResults();
             }
@@ -241,7 +212,7 @@ namespace ShowMeNow.API.Repositories
         /*
          * Get a person by personId property
          */
-        public List<Person> GetAPerson(string name)
+        public List<Person> GetAPerson(Guid personId)
         {
             List<Person> personList = null;
 
@@ -250,7 +221,7 @@ namespace ShowMeNow.API.Repositories
                 personList =
                      this.InitializeNeo4J()
                          .Cypher.Match("(aPerson:Person)")
-                         .Where((Person aPerson) => aPerson.Name == name)
+                         .Where((Person aPerson) => aPerson.PersonId == personId)
                          .Return(aPerson => aPerson.As<Person>())
                          .Results.ToList();
             }
@@ -265,7 +236,7 @@ namespace ShowMeNow.API.Repositories
         /*
          * Gets all people whith a friendship relation with a person
          */
-        public List<Person> GetAllFriends(string name)
+        public List<Person> GetAllFriends(Guid personId)
         {
             List<Person> listOfFriends = null;
             try

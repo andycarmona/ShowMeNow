@@ -1,5 +1,6 @@
 ﻿namespace ShowMeNow.API.Repositories
 {
+    using System;
     using System.Collections.Generic;
 
     using Neo4jClient;
@@ -10,19 +11,21 @@
     {
         GraphClient InitializeNeo4J();
 
-        void UpdateNodeProperties(int nodeId, string name);
+        void UpdatePlaceProperties(Guid placeId, Place placeData);
+
+        void UpdatePlaceName(Guid placeId, string name);
 
         Itinerary CreateLinkedList(Itinerary aItinerary);
 
-        void AddNodeToLinkedList();
-
-        List<Place> GetAPlace(string name);
+        List<Place> GetAPlace(Guid placeId);
 
         List<Place> GetAllPlaces();
 
+        List<Place> GetPlaceByType(Place.TypeOfPlace type);
+
         Place CreatePlace(Place aPlace);
 
-        bool DeletePlace(string name);
+        bool DeletePlace(Guid placeId);
 
         void DeleteAllNodes();
 

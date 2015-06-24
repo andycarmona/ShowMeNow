@@ -29,6 +29,7 @@ namespace ShowMeNow.API.Test.Services_Test
             _mockPeopleRepository = MockRepository.GenerateMock<IPeopleNeo4JRepository>();
             _mockPlaceRepository = MockRepository.GenerateMock<IPlacesNeo4JRepository>();
             aEntityService = new EntityService(_mockPeopleRepository, _mockPlaceRepository);
+
         }
 
         [TestCleanup]
@@ -41,21 +42,33 @@ namespace ShowMeNow.API.Test.Services_Test
         [TestMethod]
         public void EntityService_calls_Repository_methods()
         {
-            _mockPeopleRepository.Stub(x => x.GetAllFriends("Philip")).Return(null);
-            aEntityService.GetAllFriends("Philip");
-            _mockPeopleRepository.AssertWasCalled(x => x.GetAllFriends("Philip"));
+            var personId = Guid.NewGuid();
+            _mockPeopleRepository.Stub(x => x.GetAllFriends(personId)).Return(null);
+            aEntityService.GetAllFriends(personId);
+            _mockPeopleRepository.AssertWasCalled(x => x.GetAllFriends(personId));
         }
 
         [TestMethod]
-        public void EntiyService_Returns_List_With_Valid_Values()
+        public void Test_EntityService_Returns_List_With_Valid_Values()
         {
+            var personId = Guid.NewGuid();
             var aFakeDataHandler = new FakeDataHandler();
             var listOfPeople = aFakeDataHandler.GetListOfPeople();
 
-            _mockPeopleRepository.Stub(x => x.GetAllFriends(Arg<string>.Is.Anything)).Return(listOfPeople);
-            var listOfFriends = aEntityService.GetAllFriends("Philip");
+            _mockPeopleRepository.Stub(x => x.GetAllFriends(Arg<Guid>.Is.Anything)).Return(listOfPeople);
+            var listOfFriends = aEntityService.GetAllFriends(personId);
             Assert.IsInstanceOfType(listOfFriends, typeof(List<PersonDto>));
-            Assert.AreEqual("Carlos", listOfFriends[0].Name);
+          
         }
+
+
+        public void Test_to_Get_Some_Friends_To_A_Person()
+        {
+            var someData = new FakeDataHandler();
+            var somePlaces = someData.GetDtoPlaces();
+            var somePeople = someData.GetListOfDtoPeople();
+          
+        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace ShowMeNow.API.Repositories
 {
+    using System;
     using System.Collections.Generic;
 
     using Neo4jClient;
@@ -10,10 +11,11 @@
     {
         GraphClient InitializeNeo4J();
 
-        void UpdateNodeProperties(int nodeId, string name);
+        void UpdatePersonProperties(Guid personId, Person aPerson);
 
+        void UpdatePersonName(Guid personId, string name);
 
-        Person CreatePerson(Person aPerson);
+        void CreatePerson(Person aPerson);
 
         void PersonKnowsPerson(Person firstPerson, Person secondPerson);
 
@@ -21,17 +23,17 @@
 
         List<Person> GetAllPeopleByLabel();
 
-        List<Person> GetAPerson(string name);
+        List<Person> GetAPerson(Guid personId);
 
-        List<Person> GetAllFriends(string name);
+        List<Person> GetAllFriends(Guid personId);
 
         List<Person> GetAllPeople();
 
-        void DeletePerson(string name);
+        void DeletePerson(Guid personId);
 
-        bool DeletePersonWithRelations(string name);
+        bool DeletePersonWithRelations(Guid personId);
 
-        bool DeleteOrphanPerson(string name);
+        bool DeleteOrphanPerson(Guid personId);
 
         void DeleteAllNodes();
 

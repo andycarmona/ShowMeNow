@@ -57,13 +57,13 @@ namespace ShowMeNow.API.Controllers
 
         [Route("GetAllPeople")]
         [AcceptVerbs("GET")]
-        public IEnumerable GetAllFriends(string name)
+        public IEnumerable GetAllFriends(Guid personId)
         {
-            HttpResponseMessage response;
+          
             IEnumerable listOfFriends = null;
             try
             {
-                listOfFriends = _placeService.GetAllFriends(name);
+                listOfFriends = _placeService.GetAllFriends(personId);
             }
             catch (Exception e)
             {

@@ -38,57 +38,40 @@ namespace ShowMeNow.API.Repositories
             return this._neo4jClient;
         }
 
-        /*
-         *Update nodes properties , find by node id
-         */
-
-        public void UpdateNodeProperties(int nodeId, string name)
+        public void UpdatePlaceProperties(Guid placeId, Place placeData)
         {
-            var nodeReference = (NodeReference<Person>)nodeId;
-            this._neo4jClient.Update(
-                nodeReference,
-                node =>
-                    {
-                        node.Name = name;
-                    });
+            this._neo4jClient.Cypher
+                .Match("(aPlace:Place)")
+                .Where((Place aPlace) => aPlace.PlaceId == placeId)
+                .Set("aPlace = {properties}")
+                .WithParam(
+                    "properties",
+                    new Place
+                        {
+                            PlaceId = placeId,
+                            Address = placeData.Address,
+                            Coordinates = placeData.Coordinates,
+                            EMail = placeData.EMail,
+                            FeedbackId = placeData.FeedbackId,
+                            Name = placeData.Name,
+                            ParentName = placeData.ParentName,
+                            Telephone = placeData.Telephone,
+                            Type = placeData.Type
+                        })
+                .ExecuteWithoutResults();
         }
 
-
-        /*
-         * Creates a node Person in graph
-         */
-
-        public void AddNodeToLinkedList()
+        public void UpdatePlaceName(Guid placeId, string name)
         {
-            //            var refNewNode;
-            //            try
-            //            {
-            //                refNewNode =
-            //                    this._neo4jClient.Cypher
-            //                    .Match("(root)-[:LINK*0..]->(before),(after)-[:LINK*0..]->(root),(before)-[old:LINK]->(after)")
-            //                    .Where((Itinerary root) => root.Name == "ROOT")
-            //                    .AndWhere((Itinerary before) => before.ItineraryId == "ROOT")
-            //                    .Create("(p:Person {param})")
-            //                        .WithParam("param", aPerson)
-            //                        .Return<Person>("p")
-            //                        .Results.Single();
-            //            }
-            //            catch (Exception e)
-            //            {
-            //                this.logger.Error(e.Message);
-            //            }
-
-            //WHERE root.name = 'ROOT' AND (before.value < 25 OR before = root) AND (25 < after.value OR after =
-            //  root)
-            //CREATE UNIQUE (before)-[:LINK]->({ value:25 })-[:LINK]->(after)
-            //DELETE old
+            this._neo4jClient.Cypher
+                .Match("(aPlace:Place)")
+                .Where((Place aPlace) => aPlace.PlaceId == placeId)
+                .Set("aPlace.Name = {placeId}")
+                .WithParam("placeId", name)
+                .ExecuteWithoutResults();
         }
 
-
-        /*
-         * Creates a Node places
-         */
-
+    
         public List<Place> GetAllPlaces()
         {
             List<Place> placeList = null;
@@ -98,6 +81,27 @@ namespace ShowMeNow.API.Repositories
                 placeList =
                     this.InitializeNeo4J()
                         .Cypher.Match("(aPlace:Place)")
+                        .Return(aPlace => aPlace.As<Place>())
+                        .Results.ToList();
+            }
+            catch (Exception e)
+            {
+                this.logger.Error(e.Message);
+            }
+
+            return placeList;
+        }
+
+        public List<Place> GetPlaceByType(Place.TypeOfPlace type)
+        {
+            List<Place> placeList = null;
+
+            try
+            {
+                placeList =
+                    this.InitializeNeo4J()
+                        .Cypher.Match("(aPlace:Place)")
+                        .Where((Place aPlace) => aPlace.Type == type)
                         .Return(aPlace => aPlace.As<Place>())
                         .Results.ToList();
             }
@@ -129,7 +133,6 @@ namespace ShowMeNow.API.Repositories
         }
 
 
-
         public Place CreatePlace(Place aPlace)
         {
             Place refPlace = null;
@@ -149,13 +152,13 @@ namespace ShowMeNow.API.Repositories
             return refPlace;
         }
 
-        public bool DeletePlace(string name)
+        public bool DeletePlace(Guid placeId)
         {
             bool success = true;
             try
             {
                 this._neo4jClient.Cypher.Match("(aPlace:Place)")
-                    .Where((Place aPlace) => aPlace.Name == name)
+                    .Where((Place aPlace) => aPlace.PlaceId == placeId)
                     .Delete("aPlace")
                     .ExecuteWithoutResults();
             }
@@ -173,7 +176,7 @@ namespace ShowMeNow.API.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Place> GetAPlace(string name)
+        public List<Place> GetAPlace(Guid placeId)
         {
             List<Place> placeList = null;
 
@@ -182,7 +185,7 @@ namespace ShowMeNow.API.Repositories
                 placeList =
                     this.InitializeNeo4J()
                         .Cypher.Match("(aPlace:Place)")
-                        .Where((Place aPlace) => aPlace.Name == name)
+                        .Where((Place aPlace) => aPlace.PlaceId == placeId)
                         .Return(aPlace => aPlace.As<Place>())
                         .Results.ToList();
             }

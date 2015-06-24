@@ -12,6 +12,7 @@ using System.Web;
 
 namespace AngularJSAuthentication.API
 {
+    using ShowMeNow.API;
 
     public class AuthRepository : IDisposable
     {

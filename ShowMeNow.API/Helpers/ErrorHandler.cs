@@ -12,6 +12,9 @@ namespace ShowMeNow.API.Helpers
     using System;
     using System.Text;
 
+    /// <summary>
+    /// The internal error message handler 
+    /// </summary>
     public class ErrorHandler
     {
         private static StringBuilder messageList;

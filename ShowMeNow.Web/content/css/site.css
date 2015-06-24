@@ -95,6 +95,10 @@ body {
 #map-container {
     position: absolute;
 }
+
+map {
+    height: 500px;
+}
 /* Position the faces */
 .frontFace {
     -webkit-transform: translateZ(50px);

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Person.cs" company="Uni-app">
+// <copyright file="Itinerary.cs" company="Uni-app">
 //   
 // </copyright>
 // <summary>
@@ -9,17 +9,17 @@
 
 namespace ShowMeNow.API.Models.RelationModeles
 {
-    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    public class Person
+    public class Itinerary
     {
-        public Guid PersonId { get; set; }
+         [Key] 
+        public int ItineraryId { get; set; }
 
+        [MaxLength(40)]
         public string Name { get; set; }
 
-        public int Age { get; set; }
-
-        public string Email { get; set; }
-     
+        public int Value { get; set; }
     }
 }

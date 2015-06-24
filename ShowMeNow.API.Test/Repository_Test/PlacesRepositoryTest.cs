@@ -1,14 +1,18 @@
-﻿namespace ShowMeNow.API.Test.Services_Test
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="PlacesRepositoryTest.cs" company="Uniapp">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ShowMeNow.API.Test.Repository_Test
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Neo4jClient;
 
-    using ShowMeNow.API.Models;
     using ShowMeNow.API.Models.RelationModeles;
     using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Test.FakeDataModels;
@@ -16,121 +20,81 @@
     [TestClass]
     public class PlacesRepositoryTest
     {
-        private IPlacesRepository _placeRepository;
+        private IPlacesNeo4JRepository _placeRepository;
         private FakeDataHandler aFakeModel;
 
+        private List<Place> listOfPlaces;
+
+        [TestInitialize]
         public void InitializeDB()
         {
-            this._placeRepository = new PlacesRepository();
-            aFakeModel = new FakeDataHandler();
+            this._placeRepository = new PlacesNeo4JRepository();
+            this.aFakeModel = new FakeDataHandler();
             this._placeRepository.InitializeNeo4J();
-        }
 
-        /*
-    * Creates initial graph in DB
-    * */
-        public void CreateInitialData()
-        {
-            InitializeDB();
-
-            // Create entities
-            var refA =
-                this._placeRepository.CreatePerson(
-                    new Person() { Age = 12, Email = "we@se.se", Name = "Antonio", PersonId = 1 });
-
-            var refB =
-                this._placeRepository.CreatePerson(
-                    new Person() { Age = 42, Email = "wewq@se.se", Name = "Carlos", PersonId = 2 });
-
-            var refC =
-               this._placeRepository.CreatePerson(
-                new Person() { Age = 32, Email = "dfrer@se.se", Name = "Luis", PersonId = 3 });
-
-            var refD = this._placeRepository.CreatePerson(new Person() { Age = 42, Email = "lovo@se.se", Name = "Sara", PersonId = 5 });
-
-            // Create relationships
-            //_placeRepository.PeoplesHatesRelationShip(refB, refD, "crazy guy");
-            //_placeRepository.PeoplesHatesRelationShip(refC, refD, "Don't know why");
-
-        }
-
-        [TestMethod]
-        public void Test_Create_Person_and_Get_Information()
-        {
-
-            InitializeDB();
-            var listPeople = aFakeModel.GetListOfPeople();
-            this._placeRepository.CreatePerson(listPeople[0]);
-
-            var listOfPeople = this._placeRepository.GetAPerson(listPeople[0].Name);
-
-            Assert.AreEqual(listPeople[0].Email, listOfPeople[0].Email);
-
-            _placeRepository.DeletePerson(listOfPeople[0].Name);
-
-
-        }
-
-        [TestMethod]
-        public void Test_Creating_Relations_between_People()
-        {
-            InitializeDB();
-            var listPeople = aFakeModel.GetListOfPeople();
-            foreach (var person in listPeople)
+             listOfPlaces = this.aFakeModel.GetPlace();
+            foreach (var aPlace in listOfPlaces)
             {
-                this._placeRepository.CreatePerson(person);
+                this._placeRepository.CreatePlace(aPlace);
+            }
+        }
+
+        [TestCleanup]
+        public void TestCleanUp()
+        {
+            var allPlaces = this._placeRepository.GetAllPlaces();
+            foreach (var aPlace in allPlaces)
+            {
+                this._placeRepository.DeletePlace(aPlace.PlaceId);
+            }
+           
+            var resultPlaces = this._placeRepository.GetAllPlaces();
+            Assert.AreEqual(0, resultPlaces.Count);
+        }
+
+        [TestMethod]
+        public void Test_Create_a_Place()
+        {
+            var resultPlace = this._placeRepository.GetAPlace(this.listOfPlaces[0].PlaceId);
+            Assert.AreEqual(listOfPlaces[0].Name, resultPlace[0].Name);
+        
+        }
+        [TestMethod]
+        public void Test_Update_Person_Node()
+        {
+            foreach (var aPlace in listOfPlaces)
+            {
+                this._placeRepository.CreatePlace(aPlace);
             }
 
-            this._placeRepository.PersonKnowsPerson(listPeople[0], listPeople[1]);
-            this._placeRepository.PersonKnowsPerson(listPeople[1], listPeople[2]);
-            var listOfFriends = this._placeRepository.GetAllFriends(listPeople[0].Name);
-            if (listOfFriends.Count > 0)
-            {
-                Assert.AreEqual(listOfFriends[0].Email, listPeople[1].Email);
-            }
 
-            var qtyBeforeDel = _placeRepository.GetAllPeople().Count;
-            _placeRepository.DeletePerson(listPeople[0].Name);
-            var qtyAfterDel = _placeRepository.GetAllPeople().Count;
-            Assert.AreEqual(qtyBeforeDel, qtyAfterDel + 1);
-
-            qtyBeforeDel = _placeRepository.GetAllPeople().Count;
-            _placeRepository.DeletePerson(listPeople[1].Name);
-            qtyAfterDel = _placeRepository.GetAllPeople().Count;
-            Assert.AreEqual(qtyBeforeDel, qtyAfterDel + 1);
-
-            qtyBeforeDel = _placeRepository.GetAllPeople().Count;
-            _placeRepository.DeletePerson(listPeople[2].Name);
-            qtyAfterDel = _placeRepository.GetAllPeople().Count;
-            Assert.AreEqual(qtyBeforeDel, qtyAfterDel + 1);
-        }
-
-
-
-        [TestMethod]
-        public void Test_Create_Places_And_Relations()
-        {
-            this.InitializeDB();
-            var place1 = aFakeModel.GetPlace();
-            this._placeRepository.CreatePlace(place1);
-            var resultPlace = this._placeRepository.GetAPlace(place1.Name);
-            Assert.AreEqual(place1.Name, resultPlace[0].Name);
-            this._placeRepository.DeletePlace(place1.Name);
+            var onePlace = _placeRepository.GetAPlace(this.listOfPlaces[0].PlaceId);
+            Assert.AreEqual(listOfPlaces[0].Name, onePlace[0].Name);
+            _placeRepository.UpdatePlaceName(onePlace[0].PlaceId, "Loco mia");
+            onePlace = _placeRepository.GetAPlace(this.listOfPlaces[0].PlaceId);
+            Assert.AreEqual(onePlace[0].Name, "Loco mia");
         }
 
         [TestMethod]
-        public void Test_Deleting_Nodes_WithRelationShips()
+        public void Test_Update_All_Properties_Person_Node()
         {
-            this.InitializeDB();
-
-            var listOfPeople = this._placeRepository.GetAllPeople();
-
-            foreach (var person in listOfPeople)
+            foreach (var aPlace in listOfPlaces)
             {
-                Assert.IsNotNull(person);
-                Assert.IsInstanceOfType(person, typeof(Person));
-                //  DeletePerson(person.Name);
+                this._placeRepository.CreatePlace(aPlace);
             }
+            
+            var onePlace = _placeRepository.GetAPlace(listOfPlaces[0].PlaceId);
+            Assert.IsNotNull(onePlace);
+            Assert.IsInstanceOfType(onePlace, typeof(List<Place>));
+            Assert.AreEqual(listOfPlaces[0].Name, onePlace[0].Name);
+            Assert.AreEqual(listOfPlaces[0].EMail, onePlace[0].EMail);
+            Assert.AreEqual(listOfPlaces[0].Address, onePlace[0].Address);
+            _placeRepository.UpdatePlaceProperties(listOfPlaces[0].PlaceId, onePlace[0]);
+            onePlace = _placeRepository.GetAPlace(listOfPlaces[0].PlaceId);
+            Assert.IsNotNull(onePlace);
+            Assert.AreEqual(listOfPlaces[0].Name, onePlace[0].Name);
+            Assert.AreEqual(listOfPlaces[0].EMail, onePlace[0].EMail);
+            Assert.AreEqual(listOfPlaces[0].Address, onePlace[0].Address);
         }
     }
 }

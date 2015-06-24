@@ -9,6 +9,8 @@
 
 namespace ShowMeNow.API.Models.Dto
 {
+    using ShowMeNow.API.Models.RelationModeles;
+
     public class PlaceDto
     {
         public int PlaceId { get; set; }
@@ -18,6 +20,8 @@ namespace ShowMeNow.API.Models.Dto
         public string Name { get; set; }
 
         public string Address { get; set; }
+
+        public Place.TypeOfPlace Type { get; set; }
 
         public int FeedbackId { get; set; }
 

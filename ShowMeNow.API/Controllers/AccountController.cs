@@ -1,38 +1,50 @@
-﻿using AngularJSAuthentication.API.Models;
-using AngularJSAuthentication.API.Results;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AccountController.cs" company="UniApp">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-namespace AngularJSAuthentication.API.Controllers
+namespace ShowMeNow.API.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.Cors;
+
+    using AngularJSAuthentication.API;
+    using AngularJSAuthentication.API.Models;
+    using AngularJSAuthentication.API.Results;
+
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.OAuth;
+
+    using Newtonsoft.Json.Linq;
+
     using ShowMeNow.API;
 
     [RoutePrefix("api/Account")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
 
         private IAuthenticationManager Authentication
         {
-            get { return Request.GetOwinContext().Authentication; }
+            get { return this.Request.GetOwinContext().Authentication; }
         }
 
         public AccountController()
         {
-            _repo = new AuthRepository();
+            this._repo = new AuthRepository();
         }
 
         // POST api/Account/Register
@@ -40,21 +52,21 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
-             if (!ModelState.IsValid)
+             if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
-             IdentityResult result = await _repo.RegisterUser(userModel);
+             IdentityResult result = await this._repo.RegisterUser(userModel);
 
-             IHttpActionResult errorResult = GetErrorResult(result);
+             IHttpActionResult errorResult = this.GetErrorResult(result);
 
              if (errorResult != null)
              {
                  return errorResult;
              }
 
-             return Ok();
+             return this.Ok();
         }
 
         // GET api/Account/ExternalLogin
@@ -68,35 +80,35 @@ namespace AngularJSAuthentication.API.Controllers
 
             if (error != null)
             {
-                return BadRequest(Uri.EscapeDataString(error));
+                return this.BadRequest(Uri.EscapeDataString(error));
             }
 
-            if (!User.Identity.IsAuthenticated)
+            if (!this.User.Identity.IsAuthenticated)
             {
                 return new ChallengeResult(provider, this);
             }
 
-            var redirectUriValidationResult = ValidateClientAndRedirectUri(this.Request, ref redirectUri);
+            var redirectUriValidationResult = this.ValidateClientAndRedirectUri(this.Request, ref redirectUri);
 
             if (!string.IsNullOrWhiteSpace(redirectUriValidationResult))
             {
-                return BadRequest(redirectUriValidationResult);
+                return this.BadRequest(redirectUriValidationResult);
             }
 
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(this.User.Identity as ClaimsIdentity);
 
             if (externalLogin == null)
             {
-                return InternalServerError();
+                return this.InternalServerError();
             }
 
             if (externalLogin.LoginProvider != provider)
             {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                this.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+            IdentityUser user = await this._repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
 
@@ -107,7 +119,7 @@ namespace AngularJSAuthentication.API.Controllers
                                             hasRegistered.ToString(),
                                             externalLogin.UserName);
 
-            return Redirect(redirectUri);
+            return this.Redirect(redirectUri);
 
         }
 
@@ -117,32 +129,32 @@ namespace AngularJSAuthentication.API.Controllers
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
-            var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
+            var verifiedAccessToken = await this.VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
             if (verifiedAccessToken == null)
             {
-                return BadRequest("Invalid Provider or External Access Token");
+                return this.BadRequest("Invalid Provider or External Access Token");
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
+            IdentityUser user = await this._repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
 
             bool hasRegistered = user != null;
 
             if (hasRegistered)
             {
-                return BadRequest("External user is already registered");
+                return this.BadRequest("External user is already registered");
             }
 
             user = new IdentityUser() { UserName = model.UserName };
 
-            IdentityResult result = await _repo.CreateAsync(user);
+            IdentityResult result = await this._repo.CreateAsync(user);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return this.GetErrorResult(result);
             }
 
             var info = new ExternalLoginInfo()
@@ -151,16 +163,16 @@ namespace AngularJSAuthentication.API.Controllers
                 Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
             };
 
-            result = await _repo.AddLoginAsync(user.Id, info.Login);
+            result = await this._repo.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return this.GetErrorResult(result);
             }
 
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
+            var accessTokenResponse = this.GenerateLocalAccessTokenResponse(model.UserName);
 
-            return Ok(accessTokenResponse);
+            return this.Ok(accessTokenResponse);
         }
 
         [AllowAnonymous]
@@ -171,28 +183,28 @@ namespace AngularJSAuthentication.API.Controllers
 
             if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
             {
-                return BadRequest("Provider or external access token is not sent");
+                return this.BadRequest("Provider or external access token is not sent");
             }
 
-            var verifiedAccessToken = await VerifyExternalAccessToken(provider, externalAccessToken);
+            var verifiedAccessToken = await this.VerifyExternalAccessToken(provider, externalAccessToken);
             if (verifiedAccessToken == null)
             {
-                return BadRequest("Invalid Provider or External Access Token");
+                return this.BadRequest("Invalid Provider or External Access Token");
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
+            IdentityUser user = await this._repo.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
 
             bool hasRegistered = user != null;
 
             if (!hasRegistered)
             {
-                return BadRequest("External user is not registered");
+                return this.BadRequest("External user is not registered");
             }
 
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
+            var accessTokenResponse = this.GenerateLocalAccessTokenResponse(user.UserName);
 
-            return Ok(accessTokenResponse);
+            return this.Ok(accessTokenResponse);
 
         }
 
@@ -200,7 +212,7 @@ namespace AngularJSAuthentication.API.Controllers
         {
             if (disposing)
             {
-                _repo.Dispose();
+                this._repo.Dispose();
             }
 
             base.Dispose(disposing);
@@ -212,7 +224,7 @@ namespace AngularJSAuthentication.API.Controllers
         {
             if (result == null)
             {
-                return InternalServerError();
+                return this.InternalServerError();
             }
 
             if (!result.Succeeded)
@@ -221,17 +233,17 @@ namespace AngularJSAuthentication.API.Controllers
                 {
                     foreach (string error in result.Errors)
                     {
-                        ModelState.AddModelError("", error);
+                        this.ModelState.AddModelError("", error);
                     }
                 }
 
-                if (ModelState.IsValid)
+                if (this.ModelState.IsValid)
                 {
                     // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
+                    return this.BadRequest();
                 }
 
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             return null;
@@ -242,7 +254,7 @@ namespace AngularJSAuthentication.API.Controllers
 
             Uri redirectUri;
 
-            var redirectUriString = GetQueryString(Request, "redirect_uri");
+            var redirectUriString = this.GetQueryString(this.Request, "redirect_uri");
 
             if (string.IsNullOrWhiteSpace(redirectUriString))
             {
@@ -256,14 +268,14 @@ namespace AngularJSAuthentication.API.Controllers
                 return "redirect_uri is invalid";
             }
 
-            var clientId = GetQueryString(Request, "client_id");
+            var clientId = this.GetQueryString(this.Request, "client_id");
 
             if (string.IsNullOrWhiteSpace(clientId))
             {
                 return "client_Id is required";
             }
 
-            var client = _repo.FindClient(clientId);
+            var client = this._repo.FindClient(clientId);
 
             if (client == null)
             {

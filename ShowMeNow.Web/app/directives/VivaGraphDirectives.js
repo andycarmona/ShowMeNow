@@ -12,7 +12,11 @@
             // http://stackoverflow.com/questions/11496734/add-a-background-image-png-to-a-svg-circle-shape
             scope.defs = Viva.Graph.svg('defs');
             graphics.getSvgRoot().append(scope.defs);
+           
 
+            $(scope.defs).click(function () {
+                console.log("clicked");
+            });
             
             graphics.node(createNodeWithImage)
               .placeNode(placeNodeWithTransform);
@@ -24,11 +28,7 @@
             });
 
             renderer.run();
-            var ui = Viva.Graph.svg('g');
-           
-            $(ui).click(function () {
-                console.log("clicked");
-            });
+      
         }
 
         
@@ -48,9 +48,7 @@
               .attr('height', radius * 2)
               .attr('width', radius * 2)
               .link(node.data.url);
-            $(image).click(function () {
-                console.log("clicked");
-            });
+           
             pattern.append(image); 
             scope.defs.append(pattern);
 
@@ -61,7 +59,9 @@
               .attr('cy', radius)
               .attr('fill', 'url(#imageFor_' + node.id + ')')
               .attr('r', radius);
-
+            $(circle).click(function () {
+                console.log("clicked on "+ node.id);
+            });
             ui.append(circle);
             return ui;
         };

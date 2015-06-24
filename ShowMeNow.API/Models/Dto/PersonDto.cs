@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ShowMeNow.API.Models.RelationModeles
+namespace ShowMeNow.API.Models.Dto
 {
     using System;
 
-    public class Person
+    public class PersonDto
     {
         public Guid PersonId { get; set; }
 

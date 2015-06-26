@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\ngAuthenticationAPI.pubxml" />
     <None Include="Properties\PublishProfiles\showmeNow web api.pubxml" />
     <None Include="Web.Debug.config">

@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeNow.ResourceServer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeNow.API.Test", "ShowMeNow.API.Test\ShowMeNow.API.Test.csproj", "{2C77C60D-80CB-465A-BA08-8E0822A88F2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeNow.WebService", "ShowMeNow.WebService\ShowMeNow.WebService.csproj", "{B7C88726-87F8-486A-8812-042EB1FAE49E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeNow.WebService.Tests", "ShowMeNow.WebService.Tests\ShowMeNow.WebService.Tests.csproj", "{C0031357-ADE7-460B-9D38-A0C31D25B881}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,14 +33,6 @@ Global
 		{2C77C60D-80CB-465A-BA08-8E0822A88F2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C77C60D-80CB-465A-BA08-8E0822A88F2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C77C60D-80CB-465A-BA08-8E0822A88F2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7C88726-87F8-486A-8812-042EB1FAE49E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7C88726-87F8-486A-8812-042EB1FAE49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7C88726-87F8-486A-8812-042EB1FAE49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7C88726-87F8-486A-8812-042EB1FAE49E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0031357-ADE7-460B-9D38-A0C31D25B881}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0031357-ADE7-460B-9D38-A0C31D25B881}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0031357-ADE7-460B-9D38-A0C31D25B881}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0031357-ADE7-460B-9D38-A0C31D25B881}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

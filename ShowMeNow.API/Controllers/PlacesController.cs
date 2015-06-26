@@ -17,7 +17,6 @@ namespace ShowMeNow.API.Controllers
     using System.Web.Http;
     using ShowMeNow.API.Helpers;
     using ShowMeNow.API.Models.Dto;
-    using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Services;
 
     [RoutePrefix("api/Places")]
@@ -60,8 +59,7 @@ namespace ShowMeNow.API.Controllers
         [AcceptVerbs("GET")]
         public IEnumerable GetAllPlaces()
         {
-        
-            IEnumerable listOfPlaces = null;
+            List<PlaceDto> listOfPlaces = null;
             try
             {
                 listOfPlaces = _placeService.GetAllPlaces();
@@ -96,7 +94,6 @@ namespace ShowMeNow.API.Controllers
         [AcceptVerbs("GET")]
         public IEnumerable GetAllFriends(string personId)
         {
-          
             IEnumerable listOfFriends = null;
             try
             {

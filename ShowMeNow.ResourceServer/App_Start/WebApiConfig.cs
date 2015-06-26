@@ -17,7 +17,7 @@ namespace AngularJSAuthentication.ResourceServer.App_Start
             config.MapHttpAttributeRoutes();
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
-            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+           //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ShowMeNow.API.Controllers
     using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web.Http;
-    using System.Web.Http.Cors;
+  
 
     using AngularJSAuthentication.API;
     using AngularJSAuthentication.API.Models;
@@ -32,7 +32,6 @@ namespace ShowMeNow.API.Controllers
     using ShowMeNow.API;
 
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;

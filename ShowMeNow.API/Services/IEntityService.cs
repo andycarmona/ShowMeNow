@@ -16,12 +16,16 @@ namespace ShowMeNow.API.Services
 
     public interface IEntityService
     {
-    List<PersonDto> GetAllFriends(Guid personId);
+    List<PersonDto> GetAllFriends(string personId);
 
         void AddPerson(PersonDto aPerson);
 
         void AddPersonRelation(PersonDto person1, PersonDto person2);
 
         void AddPlace(PlaceDto aPlace);
+
+        List<PlaceDto> GetAllPlaces();
+
+        List<PersonDto> GetAllPeople();
     }
 }

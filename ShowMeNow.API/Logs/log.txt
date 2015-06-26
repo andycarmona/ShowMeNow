@@ -1,3 +1,27 @@
 ERROR 2015-06-10 10:43:03,896 14973ms PlacesController       InitializeDatabase - Ett eller flera fel har uppstått.
 ERROR 2015-06-10 11:26:42,720   358ms PlacesController       AddInitialPeople   - Objektreferensen har inte angetts till en instans av ett objekt.
 ERROR 2015-06-10 18:41:31,936 97781ms PlacesController       AddInitialPeople   - Objektreferensen har inte angetts till en instans av ett objekt.
+ERROR 2015-06-24 13:59:38,210 54743ms PlacesController       GetAllPlaces       - Objektreferensen har inte angetts till en instans av ett objekt.
+ERROR 2015-06-24 14:04:12,959 38728ms PlacesController       GetAllPlaces       - Objektreferensen har inte angetts till en instans av ett objekt.
+ERROR 2015-06-26 12:03:02,344 13190ms PlacesController       GetAllPlaces       - Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Guid -> Int32
+System.Guid -> System.Int32
+
+Destination path:
+List`1[0].PlaceId.PlaceId
+
+Source value:
+86ff9cf6-5737-4db8-8ee9-3c24ae7167b7
+ERROR 2015-06-26 12:04:22,494 93341ms PlacesController       GetAllPlaces       - Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Guid -> Int32
+System.Guid -> System.Int32
+
+Destination path:
+List`1[0].PlaceId.PlaceId
+
+Source value:
+86ff9cf6-5737-4db8-8ee9-3c24ae7167b7

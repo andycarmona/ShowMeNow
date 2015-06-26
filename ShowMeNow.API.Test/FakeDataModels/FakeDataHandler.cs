@@ -1,4 +1,13 @@
-﻿namespace ShowMeNow.API.Test.FakeDataModels
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FakeDataHandler.cs" company="Uniapp">
+//   
+// </copyright>
+// <summary>
+//   
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ShowMeNow.API.Test.FakeDataModels
 {
     using System;
     using System.Collections.Generic;
@@ -10,76 +19,76 @@
     {
         public List<Place> GetPlace()
         {
-            var listOfPlaces = new List<Place>()
+            var listOfPlaces = new List<Place>
+                                   {
+                                       new Place
                                            {
-                                               new Place()
-                                                   {
-                                                       Address = "Chinese",
-                                                       Coordinates = 2.3,
-                                                       EMail = "rowe@se.se",
-                                                       Type = Place.TypeOfPlace.Restaurant,
-                                                       Name = "webo",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = Guid.NewGuid(),
-                                                       Telephone = 22323456
-                                                   },
-                                               new Place()
-                                                   {
-                                                       Address = "Torget",
-                                                       Coordinates = 2.3,
-                                                       Type = Place.TypeOfPlace.Bar,
-                                                       EMail = "we@se.se",
-                                                       Name = "MyBar",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = Guid.NewGuid(),
-                                                       Telephone = 2232378
-                                                   },
-                                                new Place()
-                                                   {
-                                                       Address = "Españolo",
-                                                       Coordinates = 2.3,
-                                                       Type = Place.TypeOfPlace.Restaurant,
-                                                       EMail = "we@se.se",
-                                                       Name = "MyBar",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = Guid.NewGuid(),
-                                                       Telephone = 34522323
-                                                   }
-                                           };
+                                               Address = "Chinese",
+                                               Coordinates = 2.3,
+                                               EMail = "rowe@se.se",
+                                               Type = Place.TypeOfPlace.Restaurant,
+                                               Name = "webo",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = Guid.NewGuid().ToString(),
+                                               Telephone = 22323456
+                                           },
+                                       new Place
+                                           {
+                                               Address = "Torget",
+                                               Coordinates = 2.3,
+                                               Type = Place.TypeOfPlace.Bar,
+                                               EMail = "we@se.se",
+                                               Name = "MyBar",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = Guid.NewGuid().ToString(),
+                                               Telephone = 2232378
+                                           },
+                                       new Place
+                                           {
+                                               Address = "Españolo",
+                                               Coordinates = 2.3,
+                                               Type = Place.TypeOfPlace.Restaurant,
+                                               EMail = "we@se.se",
+                                               Name = "MyBar",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = Guid.NewGuid().ToString(),
+                                               Telephone = 34522323
+                                           }
+                                   };
             return listOfPlaces;
         }
 
         public Feedback GetFeedBack()
         {
-            var aFeedback = new Feedback()
-            {
-                Comments = "loco",
-                FeedbackId = 1,
-                negativePunctuation = 3,
-                positivePunctuation = 6
-            };
+            var aFeedback = new Feedback
+                                {
+                                    Comments = "loco",
+                                    FeedbackId = 1,
+                                    negativePunctuation = 3,
+                                    positivePunctuation = 6
+                                };
             return aFeedback;
         }
 
         public Itinerary GetItinerary()
         {
-            var aItinerary = new Itinerary() { ItineraryId = 2, Name = "loco viaje", Value = 25 };
+            var aItinerary = new Itinerary { ItineraryId = 2, Name = "loco viaje", Value = 25 };
             return aItinerary;
         }
 
         public List<Person> GetListOfPeople()
         {
-           List<Person> listOfPeople;
+            List<Person> listOfPeople;
             listOfPeople = new List<Person>();
 
-            var person1 = new Person() { Age = 3, Email = "tes@se.se", Name = "Carlos", PersonId = Guid.NewGuid() };
+            var person1 = new Person { Age = 3, Email = "tes@se.se", Name = "Carlos", PersonId = Guid.NewGuid().ToString() };
 
-            var person2 = new Person() { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = Guid.NewGuid() };
+            var person2 = new Person { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = Guid.NewGuid().ToString() };
 
-            var person3 = new Person() { Age = 52, Email = "frt@se.se", Name = "Malulo", PersonId = Guid.NewGuid() };
+            var person3 = new Person { Age = 52, Email = "frt@se.se", Name = "Malulo", PersonId = Guid.NewGuid().ToString() };
 
             listOfPeople.Add(person1);
             listOfPeople.Add(person2);
@@ -87,17 +96,15 @@
             return listOfPeople;
         }
 
-
         public List<PersonDto> GetListOfDtoPeople()
         {
-            List<PersonDto> listOfPeople;
-            listOfPeople = new List<PersonDto>();
+            var listOfPeople = new List<PersonDto>();
 
-            var person1 = new PersonDto() { Age = 3, Email = "tes@se.se", Name = "Carlos", PersonId = Guid.NewGuid() };
+            var person1 = new PersonDto { Age = 3, Email = "tes@se.se", Name = "Carlos", PersonId = Guid.NewGuid() };
 
-            var person2 = new PersonDto() { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = Guid.NewGuid() };
+            var person2 = new PersonDto { Age = 62, Email = "frt@se.se", Name = "Philip", PersonId = Guid.NewGuid() };
 
-            var person3 = new PersonDto() { Age = 52, Email = "frt@se.se", Name = "Malulo", PersonId = Guid.NewGuid() };
+            var person3 = new PersonDto { Age = 52, Email = "frt@se.se", Name = "Malulo", PersonId = Guid.NewGuid() };
 
             listOfPeople.Add(person1);
             listOfPeople.Add(person2);
@@ -107,45 +114,45 @@
 
         public List<PlaceDto> GetDtoPlaces()
         {
-            var listOfPlaces = new List<PlaceDto>()
+            var listOfPlaces = new List<PlaceDto>
+                                   {
+                                       new PlaceDto
                                            {
-                                               new PlaceDto()
-                                                   {
-                                                       Address = "Chinese",
-                                                       Coordinates = 2.3,
-                                                       EMail = "rowe@se.se",
-                                                       Type = Place.TypeOfPlace.Restaurant,
-                                                       Name = "webo",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = 23,
-                                                       Telephone = 22323456
-                                                   },
-                                               new PlaceDto()
-                                                   {
-                                                       Address = "Torget",
-                                                       Coordinates = 2.3,
-                                                       Type = Place.TypeOfPlace.Bar,
-                                                       EMail = "we@se.se",
-                                                       Name = "MyBar",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = 23,
-                                                       Telephone = 2232378
-                                                   },
-                                                new PlaceDto()
-                                                   {
-                                                       Address = "Españolo",
-                                                       Coordinates = 2.3,
-                                                       Type = Place.TypeOfPlace.Restaurant,
-                                                       EMail = "we@se.se",
-                                                       Name = "MyBar",
-                                                       ParentName = string.Empty,
-                                                       FeedbackId = 1,
-                                                       PlaceId = 23,
-                                                       Telephone = 34522323
-                                                   }
-                                           };
+                                               Address = "Chinese",
+                                               Coordinates = 2.3,
+                                               EMail = "rowe@se.se",
+                                               Type = Place.TypeOfPlace.Restaurant,
+                                               Name = "webo",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = "23",
+                                               Telephone = 22323456
+                                           },
+                                       new PlaceDto
+                                           {
+                                               Address = "Torget",
+                                               Coordinates = 2.3,
+                                               Type = Place.TypeOfPlace.Bar,
+                                               EMail = "we@se.se",
+                                               Name = "MyBar",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = "24",
+                                               Telephone = 2232378
+                                           },
+                                       new PlaceDto
+                                           {
+                                               Address = "Españolo",
+                                               Coordinates = 2.3,
+                                               Type = Place.TypeOfPlace.Restaurant,
+                                               EMail = "we@se.se",
+                                               Name = "MyBar",
+                                               ParentName = string.Empty,
+                                               FeedbackId = 1,
+                                               PlaceId = "25",
+                                               Telephone = 34522323
+                                           }
+                                   };
             return listOfPlaces;
         }
     }

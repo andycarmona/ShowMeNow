@@ -13,7 +13,7 @@ namespace ShowMeNow.API.Models.Dto
 
     public class PlaceDto
     {
-        public int PlaceId { get; set; }
+        public string PlaceId { get; set; }
 
         public double Coordinates { get; set; }
 

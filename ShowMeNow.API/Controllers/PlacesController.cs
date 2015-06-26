@@ -16,6 +16,7 @@ namespace ShowMeNow.API.Controllers
     using System.Net.Http;
     using System.Web.Http;
     using ShowMeNow.API.Helpers;
+    using ShowMeNow.API.Models.Dto;
     using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Services;
 
@@ -55,9 +56,45 @@ namespace ShowMeNow.API.Controllers
             return response;
         }
 
+        [Route("GetAllPlaces")]
+        [AcceptVerbs("GET")]
+        public IEnumerable GetAllPlaces()
+        {
+        
+            IEnumerable listOfPlaces = null;
+            try
+            {
+                listOfPlaces = _placeService.GetAllPlaces();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
+
+            return listOfPlaces;
+        }
+
         [Route("GetAllPeople")]
         [AcceptVerbs("GET")]
-        public IEnumerable GetAllFriends(Guid personId)
+        public List<PersonDto> GetAllPeople()
+        {
+
+            List<PersonDto> listOfPeople = null;
+            try
+            {
+                listOfPeople = _placeService.GetAllPeople();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e.Message);
+            }
+
+            return listOfPeople;
+        }
+
+        [Route("GetAllPeople")]
+        [AcceptVerbs("GET")]
+        public IEnumerable GetAllFriends(string personId)
         {
           
             IEnumerable listOfFriends = null;

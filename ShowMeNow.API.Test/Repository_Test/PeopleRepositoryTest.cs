@@ -38,7 +38,7 @@ namespace ShowMeNow.API.Test.Repository_Test
         public void TestCleanUp()
         {
             listPeople = null;
-            this.DeleteAllPeople();
+            //this.DeleteAllPeople();
         }
 
 

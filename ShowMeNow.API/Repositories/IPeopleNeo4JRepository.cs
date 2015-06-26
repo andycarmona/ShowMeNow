@@ -11,9 +11,9 @@
     {
         GraphClient InitializeNeo4J();
 
-        void UpdatePersonProperties(Guid personId, Person aPerson);
+        void UpdatePersonProperties(string personId, Person aPerson);
 
-        void UpdatePersonName(Guid personId, string name);
+        void UpdatePersonName(string personId, string name);
 
         void CreatePerson(Person aPerson);
 
@@ -23,19 +23,16 @@
 
         List<Person> GetAllPeopleByLabel();
 
-        List<Person> GetAPerson(Guid personId);
+        List<Person> GetAPerson(string personId);
 
-        List<Person> GetAllFriends(Guid personId);
+        List<Person> GetAllFriends(string personId);
 
         List<Person> GetAllPeople();
 
-        void DeletePerson(Guid personId);
+        void DeletePerson(string personId);
 
-        bool DeletePersonWithRelations(Guid personId);
+        bool DeletePersonWithRelations(string personId);
 
-        bool DeleteOrphanPerson(Guid personId);
-
-        void DeleteAllNodes();
-
+        bool DeleteOrphanPerson(string personId);
     }
 }

@@ -28,6 +28,7 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
     placesServiceFactory.InitializeDataBase = _initializeDB;
     placesServiceFactory.AddInitialPeople = _addInitialPeople;
     placesServiceFactory.GetAllPlaces = _getAllPlaces;
+    placesServiceFactory.GetAllPeople = _getAllPeople;
     return placesServiceFactory;
 
 }]);

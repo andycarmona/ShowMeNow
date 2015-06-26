@@ -38,7 +38,7 @@ namespace ShowMeNow.API.Repositories
         /*
          *Update nodes properties , find by node id
          */
-        public void UpdatePersonProperties(Guid personId, Person personData)
+        public void UpdatePersonProperties(string personId, Person personData)
         {
             
             this._neo4jClient.Cypher
@@ -49,7 +49,7 @@ namespace ShowMeNow.API.Repositories
                 .ExecuteWithoutResults();
         }
 
-        public void UpdatePersonName(Guid personId, string name)
+        public void UpdatePersonName(string personId, string name)
         {
             this._neo4jClient.Cypher
                 .Match("(aPerson:Person)")
@@ -83,7 +83,7 @@ namespace ShowMeNow.API.Repositories
         /*
          * Delete person node without relationship
          */
-        public void DeletePerson(Guid personId)
+        public void DeletePerson(string personId)
         {
 
             var result
@@ -105,7 +105,7 @@ namespace ShowMeNow.API.Repositories
             }
         }
 
-        public bool DeleteOrphanPerson(Guid personId)
+        public bool DeleteOrphanPerson(string personId)
         {
             bool success = true;
             try
@@ -123,14 +123,10 @@ namespace ShowMeNow.API.Repositories
             return success;
         }
 
-        public void DeleteAllNodes()
-        {
-            throw new NotImplementedException();
-        }
         /*
          * Delete person node and relationship
          */
-        public bool DeletePersonWithRelations(Guid personId)
+        public bool DeletePersonWithRelations(string personId)
         {
             var success = true;
             try
@@ -212,7 +208,7 @@ namespace ShowMeNow.API.Repositories
         /*
          * Get a person by personId property
          */
-        public List<Person> GetAPerson(Guid personId)
+        public List<Person> GetAPerson(string personId)
         {
             List<Person> personList = null;
 
@@ -236,7 +232,7 @@ namespace ShowMeNow.API.Repositories
         /*
          * Gets all people whith a friendship relation with a person
          */
-        public List<Person> GetAllFriends(Guid personId)
+        public List<Person> GetAllFriends(string personId)
         {
             List<Person> listOfFriends = null;
             try

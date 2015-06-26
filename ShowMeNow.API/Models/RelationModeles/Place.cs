@@ -24,7 +24,7 @@ namespace ShowMeNow.API.Models.RelationModeles
         };
 
         [Key]
-        public Guid PlaceId { get; set; }
+        public string PlaceId { get; set; }
 
         public TypeOfPlace Type { get; set; }
 

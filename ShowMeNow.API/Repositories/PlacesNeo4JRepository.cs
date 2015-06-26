@@ -20,7 +20,6 @@ namespace ShowMeNow.API.Repositories
 
     public class PlacesNeo4JRepository : IPlacesNeo4JRepository
     {
-
         private readonly log4net.ILog logger =
             log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -38,7 +37,7 @@ namespace ShowMeNow.API.Repositories
             return this._neo4jClient;
         }
 
-        public void UpdatePlaceProperties(Guid placeId, Place placeData)
+        public void UpdatePlaceProperties(string placeId, Place placeData)
         {
             this._neo4jClient.Cypher
                 .Match("(aPlace:Place)")
@@ -48,7 +47,7 @@ namespace ShowMeNow.API.Repositories
                     "properties",
                     new Place
                         {
-                            PlaceId = placeId,
+                            PlaceId = placeId.ToString(),
                             Address = placeData.Address,
                             Coordinates = placeData.Coordinates,
                             EMail = placeData.EMail,
@@ -61,7 +60,7 @@ namespace ShowMeNow.API.Repositories
                 .ExecuteWithoutResults();
         }
 
-        public void UpdatePlaceName(Guid placeId, string name)
+        public void UpdatePlaceName(string placeId, string name)
         {
             this._neo4jClient.Cypher
                 .Match("(aPlace:Place)")
@@ -71,7 +70,6 @@ namespace ShowMeNow.API.Repositories
                 .ExecuteWithoutResults();
         }
 
-    
         public List<Place> GetAllPlaces()
         {
             List<Place> placeList = null;
@@ -132,7 +130,6 @@ namespace ShowMeNow.API.Repositories
             return refItinerary;
         }
 
-
         public Place CreatePlace(Place aPlace)
         {
             Place refPlace = null;
@@ -152,7 +149,7 @@ namespace ShowMeNow.API.Repositories
             return refPlace;
         }
 
-        public bool DeletePlace(Guid placeId)
+        public bool DeletePlace(String placeId)
         {
             bool success = true;
             try
@@ -170,13 +167,12 @@ namespace ShowMeNow.API.Repositories
             return success;
         }
 
-
         public void DeleteAllNodes()
         {
             throw new NotImplementedException();
         }
 
-        public List<Place> GetAPlace(Guid placeId)
+        public List<Place> GetAPlace(string placeId)
         {
             List<Place> placeList = null;
 

@@ -11,13 +11,13 @@
     {
         GraphClient InitializeNeo4J();
 
-        void UpdatePlaceProperties(Guid placeId, Place placeData);
+        void UpdatePlaceProperties(string placeId, Place placeData);
 
-        void UpdatePlaceName(Guid placeId, string name);
+        void UpdatePlaceName(string placeId, string name);
 
         Itinerary CreateLinkedList(Itinerary aItinerary);
 
-        List<Place> GetAPlace(Guid placeId);
+        List<Place> GetAPlace(string placeId);
 
         List<Place> GetAllPlaces();
 
@@ -25,7 +25,7 @@
 
         Place CreatePlace(Place aPlace);
 
-        bool DeletePlace(Guid placeId);
+        bool DeletePlace(string placeId);
 
         void DeleteAllNodes();
 

@@ -42,18 +42,20 @@ namespace ShowMeNow.API.Test.Repository_Test
         [TestCleanup]
         public void TestCleanUp()
         {
+         //this.DeleteAllPlaces();
+        }
+
+        private void DeleteAllPlaces()
+        {
             var allPlaces = this._placeRepository.GetAllPlaces();
             foreach (var aPlace in allPlaces)
             {
                 this._placeRepository.DeletePlace(aPlace.PlaceId);
             }
-           
-            var resultPlaces = this._placeRepository.GetAllPlaces();
-            Assert.AreEqual(0, resultPlaces.Count);
         }
 
         [TestMethod]
-        public void Test_Create_a_Place()
+        public void Test_Get_Data_Of_A_Created_Place()
         {
             var resultPlace = this._placeRepository.GetAPlace(this.listOfPlaces[0].PlaceId);
             Assert.AreEqual(listOfPlaces[0].Name, resultPlace[0].Name);

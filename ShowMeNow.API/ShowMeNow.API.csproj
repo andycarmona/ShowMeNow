@@ -163,6 +163,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
+    <Compile Include="Helpers\GuidToStringConverter.cs" />
     <Compile Include="Migrations\201506181605204_CreateItineraryTable.cs" />
     <Compile Include="Migrations\201506181605204_CreateItineraryTable.Designer.cs">
       <DependentUpon>201506181605204_CreateItineraryTable.cs</DependentUpon>

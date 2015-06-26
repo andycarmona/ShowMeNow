@@ -7,6 +7,8 @@ using System.Web.Http;
 
 namespace AngularJSAuthentication.API
 {
+    using System.Net.Http.Headers;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -14,7 +16,7 @@ namespace AngularJSAuthentication.API
             config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

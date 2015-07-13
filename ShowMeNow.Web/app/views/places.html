@@ -1,61 +1,41 @@
-﻿<div class="row">
-    <div class="col-md-12 ">
-        <div class="row">
-            <div class="cube" ng-class="{'cubeHover':selectedButton === 'hover'}">
-                <div class="col-md-12">
-                    <div class="frontFace" ng-style="{height: iframeHeight + 'px'}">
-                        <div class="row">
+﻿
 
-                            <div class="col-md-6">
-                                <p>My places delivered by Neo4j</p>
+<div class="scrollable">
+    <div class="scrollable-content">
+        <p>My places delivered by Neo4j</p>
 
-                                <div id="graph-container" vivagraph-test>
+        <div id="graph-container" vivagraph-test>
 
-                                    <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
-                                    <!--<div id="graph-container" sigma-test></div>-->
-                                    <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
-                                    <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
+            <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
+            <!--<div id="graph-container" sigma-test></div>-->
+            <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
+            <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
 
-                                </div>
-                                <div id="map-container">
-                                    <!--<leaflet></leaflet>-->
-                                    <map center="current-location" zoom="18">
-                                        <info-window position="current-location" visible="true">
-                                            <span>You are here.</span>
-                                        </info-window>
-                                    </map>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+        </div>
+        <div id="map-container">
+            <!--<leaflet></leaflet>-->
+            <map center="current-location" zoom="18">
+                <info-window position="current-location" visible="true">
+                    <span>You are here.</span>
+                </info-window>
+            </map>
+        </div>
 
-                                <label>Birthday: <input kendo-date-picker k-options="monthPickerConfig" ng-model="birthday" /></label>
-                                Your selection: {{ birthday }}
 
-                                <!--<input kendo-numerictextbox k-min="1" k-max="10" k-up-arrow-text="'Increment'" k-down-arrow-text="'Decrement'">-->
-                                <div kendo-list-view k-data-source="places">
-                                    <!-- the template (including the div tag itself) here will be assigned as a string to the `template` configuration option of the listview widget -->
-                                    <div k-template>
-                                        <!--<img ng-src="http://demos.telerik.com/kendo-ui/content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
-                                        <h3>{{ dataItem.Name }}</h3>
-                                        <p>{{ dataItem.Address }}</p>
-                                    </div>
-                                </div>
-                                <div kendo-pager k-data-source="source"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="backFace">
-                        <!--<div kendo-grid k-data-source="products" k-selectable="'row'"
-                             k-pageable='{ "pageSize": 2, "refresh": true, "pageSizes": true }'
-                             k-columns='[
-                                    { "field": "name", "title": "Name"},
-                                    { "field": "department", "title": "Department"},
-                                    { "field": "lastShipment", "title": "Last Shipment" }
-                                 ]'>
-                        </div>-->
-                    </div>
-                </div>
+        <label>Birthday: <input kendo-date-picker k-options="monthPickerConfig" ng-model="birthday" /></label>
+        Your selection: {{ birthday }}
+
+        <!--<input kendo-numerictextbox k-min="1" k-max="10" k-up-arrow-text="'Increment'" k-down-arrow-text="'Decrement'">-->
+        <div kendo-list-view k-data-source="places">
+            <!-- the template (including the div tag itself) here will be assigned as a string to the `template` configuration option of the listview widget -->
+            <div k-template>
+                <!--<img ng-src="http://demos.telerik.com/kendo-ui/content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
+                <h3>{{ dataItem.name }}</h3>
+                <p>{{ dataItem.address }}</p>
             </div>
         </div>
+        <div kendo-pager k-data-source="source"></div>
     </div>
 </div>
+
+

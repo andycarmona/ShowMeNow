@@ -22,7 +22,7 @@ namespace ShowMeNow.API.Controllers
     using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Services;
 
-    [EnableCors("* ", "* ", "* ")]
+    [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Places")]
     public class PlacesController : ApiController
     {

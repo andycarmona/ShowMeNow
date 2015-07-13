@@ -24,6 +24,7 @@
             scope.graph = constructGraph();
             var renderer = Viva.Graph.View.renderer(scope.graph, {
                 graphics: graphics,
+                interactive: false,
                 container: document.getElementById('graph-container')
             });
 

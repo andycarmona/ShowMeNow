@@ -87,6 +87,8 @@
     <Content Include="content\css\font-awesome.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
+    <Content Include="content\css\mobile-angular-ui-base.css" />
+    <Content Include="content\css\mobile-angular-ui-desktop.css" />
     <Content Include="content\css\site.css" />
     <Content Include="content\css\social-buttons.css" />
     <Content Include="content\fonts\fontawesome-webfont.svg" />
@@ -117,6 +119,7 @@
     <Content Include="scripts\d3.min.js" />
     <Content Include="scripts\kendo.custom.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\mobile-angular-ui.min.js" />
     <Content Include="scripts\sigma.min.js" />
     <Content Include="scripts\vivagraph.min.js" />
     <Content Include="Web.config" />

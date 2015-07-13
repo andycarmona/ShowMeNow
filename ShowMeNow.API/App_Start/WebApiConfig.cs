@@ -13,7 +13,7 @@ namespace AngularJSAuthentication.API
     {
         public static void Register(HttpConfiguration config)
         {
-            config.EnableCors();
+           // config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));

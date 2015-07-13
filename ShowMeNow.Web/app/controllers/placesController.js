@@ -12,6 +12,8 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
        
     }
 
+   
+
     $scope.monthPickerConfig = {
         start: "year",
         depth: "year",
@@ -29,13 +31,17 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
     //});
 
     placesService.GetAllPlaces().then(function (results) {
-
-        $scope.places = results.data;
+        $scope.source = new kendo.data.DataSource({
+            data: results.data,
+            pageSize: 4
+        });
+      
 
 
     }, function (error) {
         //alert(error.data.message);
     });
+   
 
     placesService.GetAllPeople().then(function (results) {
 

@@ -5,62 +5,74 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
-
-                    <div class="col-md-2">
-                    </div>
                     <div class="col-md-4">
-                        <p>My places delivered by Neo4j</p>
+                        <ul class="nav nav-tabs" ui-state='activeTab' ui-default='1'>
+                            <li ui-class="{'active': activeTab == 1}">
+                                <a ui-set="{'activeTab': 1}">Place list</a>
+                            </li>
+                            <li ui-class="{'active': activeTab == 2}">
+                                <a ui-set="{'activeTab': 2}">Statistic</a>
+                            </li>
+                            <li ui-class="{'active': activeTab == 3}">
+                                <a ui-set="{'activeTab': 3}">Custom</a>
+                            </li>
+                        </ul>
+                        <div ui-if="activeTab == 1">
+                            <label>Birthday: <input kendo-date-picker k-options="monthPickerConfig" ng-model="birthday" /></label>
+                            Your selection: {{ birthday }}
+
+                            <div class="place-section k-header wide">
+                                <div kendo-list-view id="listView" k-data-source="source">
+                                    <div class="place" k-template>
+                                        <!--<img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
+                                        <h3>{{ dataItem.name }}</h3>
+                                        <p>{{ dataItem.address }}</p>
+                                    </div>
+                                </div>
+                                <div kendo-pager k-data-source="source"></div>
+                            </div>
+                        </div>
+                        <div ui-if="activeTab == 2">
+                            <h3 class="page-header">Tab 2</h3>
+                            <!-- ... -->
+                        </div>
+
+                        <div ui-if="activeTab == 3">
+                            <h3 class="page-header">Tab 3</h3>
+                            <!-- ... -->
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        
                         <div id="map-container">
                             <!--<leaflet></leaflet>-->
-                            <map center="current-location" zoom="18">
+                            <map center="current-location" zoom="18" >
+                                <custom-control id="go-home" position="TOP_RIGHT" index="1" on-click="goHome()">
+                                    <div class="panel"><div vivagraph-test></div>
+                                        <div class="round-button"><div class="round-button-circle"><a href="http://example.com" class="round-button">Button!!</a></div></div>
+                                    </div>
+                                </custom-control>
+
+                              
                                 <info-window position="current-location" visible="true">
                                     <span>You are here.</span>
                                 </info-window>
                             </map>
                         </div>
-
+                        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
+                        <!--<div id="graph-container" sigma-test></div>-->
+                        <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
+                        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
+                        <!--<div ng-repeat="company in companyNames"><p>{{adverts.company.companyInfo.companyName}}</p></div>-->
+                        <div ng-repeat="advert in adverts"><p>companyName:{{advert.companyInfo.companyName}} latitude:{{advert.location.coordinates[0].latitude}} | longitude:{{advert.location.coordinates[0].longitude}} index:{{$index}}</p></div>
                     </div>
-                    <div class="col-md-4">
-                        <div id="graph-container">
-                            <div class="graph-nodes" vivagraph-test>
-                            </div>
-                            <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
-                            <!--<div id="graph-container" sigma-test></div>-->
-                            <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
-                            <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
-
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                    </div>
+           
                 </div>
-
-                <div class="row">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-8">
-                        <label>Birthday: <input kendo-date-picker k-options="monthPickerConfig" ng-model="birthday" /></label>
-                        Your selection: {{ birthday }}
-
-                        <div class="place-section k-header wide">
-                            <div kendo-list-view id="listView" k-data-source="source">
-                                <div class="place" k-template>
-                                    <!--<img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
-                                    <h3>{{ dataItem.name }}</h3>
-                                    <p>{{ dataItem.address }}</p>
-                                </div>
-                            </div>
-                            <div kendo-pager k-data-source="source"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-
-
-                    </div>
-                </div>
+            
             </div>
         </div>
     </div>
-        </div>
+</div>
 
 

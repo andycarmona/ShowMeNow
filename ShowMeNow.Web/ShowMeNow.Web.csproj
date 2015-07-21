@@ -112,6 +112,14 @@
     <Content Include="app\app.js" />
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\images\coffee.png" />
+    <Content Include="content\images\dance.png" />
+    <Content Include="content\images\fastfood.png" />
+    <Content Include="content\images\festival.png" />
+    <Content Include="content\images\hotel.png" />
+    <Content Include="content\images\info.png" />
+    <Content Include="content\images\restaurant.png" />
+    <Content Include="content\images\teahouse.png" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-leaflet-directive.min.js" />
     <Content Include="scripts\angular-local-storage.min.js" />

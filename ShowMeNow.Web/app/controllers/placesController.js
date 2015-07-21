@@ -1,24 +1,8 @@
 ﻿'use strict';
-app.controller('placesController', ['$scope','placesService',  function ($scope,placesService) {
+app.controller('placesController', ['$scope', 'placesService', function ($scope, placesService) {
 
     $scope.places = [];
-
-    //placesService.InitializeDataBase();
-    $scope.iframeHeight = window.innerHeight;
-    $scope.iframeWidth = window.innerWidth;
-    $scope.styleContainer = function () {
-        var style1 = "width: 400px;height:400px;";
-     
-            return style1;
-       
-    }
-
-    $scope.image = {
-        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-        size: [20, 32],
-        origin: [0, 0],
-        anchor: [0, 32]
-    };
+    var markers = [];
     $scope.shape = {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
         type: 'poly'
@@ -36,52 +20,62 @@ app.controller('placesController', ['$scope','placesService',  function ($scope,
         depth: "year",
         format: "MMMM yyyy"
     };
-    var markers = [];
-    for (var i = 0; i < 10 ; i++) {
-        markers[i] = new google.maps.Marker({
-            title: "Hi marker " + i
+
+    $scope.placeslist = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "http://demos.telerik.com/kendo-ui/service/products",
+                dataType: "jsonp"
+            }
+        },
+        pageSize: 2
+    });
+
+    $scope.triggernode = function (clickEl) {
+
+        console.log("clicked on " + clickEl);
+        placesService.GetExternalList(57.709421, 11.964304, "gothenburg", clickEl).then(function (d) {
+            $scope.image = {
+                url: '../content/images/' + clickEl + '.png',
+                size: new google.maps.Size(32, 37),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 37)
+            };
+            $scope.adverts = d.data.adverts;
+            $scope.placesList = new kendo.data.DataSource({
+                data: d.data.adverts,
+                pageSize: 5
+            });
+
+            for (var i = 0; i < $scope.adverts.length; i++) {
+                markers[i] = new google.maps.Marker({
+                    title: $scope.adverts[i].companyInfo.companyName,
+                    shape: $scope.shape,
+                    icon: $scope.image.url,
+                    zIndex: i + 1
+                });
+                var lat = parseFloat(d.data.adverts[i].location.coordinates[0].latitude);
+                var lng = parseFloat(d.data.adverts[i].location.coordinates[0].longitude);
+                if ((lat != undefined) || (lng != undefined)) {
+                    var latlng = new google.maps.LatLng(lat, lng);
+                    markers[i].setPosition(latlng);
+                    markers[i].setMap($scope.map);
+                }
+            }
         });
     }
 
-   
-    //$scope.source = new kendo.data.DataSource({
-    //    transport: {
-    //        read: {
-    //            url: "http://demos.telerik.com/kendo-ui/service/products",
-    //            dataType: "jsonp"
-    //        }
-    //    },
-    //    pageSize: 2
-    //});
- 
-        //$scope.hotel = results.CompanyInfo.companyName;
-    placesService.GetExternalList().then(function (d) {
-      
-        $scope.adverts = d.data.adverts;
 
-        for (i = 0; i < 8; i++) {
-            var lat = parseFloat(d.data.adverts[i].location.coordinates[0].latitude);
-            var lng = parseFloat(d.data.adverts[i].location.coordinates[0].longitude);
-            if ((lat != undefined) || (lng != undefined)) {
-                var latlng = new google.maps.LatLng(lat, lng);
-                markers[i].setPosition(latlng);
-                markers[i].setMap($scope.map);
-            }
-        }
-    });
 
     placesService.GetAllPlaces().then(function (results) {
         $scope.source = new kendo.data.DataSource({
             data: results.data,
             pageSize: 4
         });
-      
-
-
     }, function (error) {
         //alert(error.data.message);
     });
-   
+
 
     placesService.GetAllPeople().then(function (results) {
 

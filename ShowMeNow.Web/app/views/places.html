@@ -1,11 +1,13 @@
 ﻿
 
-<div class="scrollable">
-    <div class="scrollable-content">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="navpanel">
+            <div class="scrollable">
+                <div class="scrollable-content">
+              
                         <ul class="nav nav-tabs" ui-state='activeTab' ui-default='1'>
                             <li ui-class="{'active': activeTab == 1}">
                                 <a ui-set="{'activeTab': 1}">Place list</a>
@@ -17,62 +19,89 @@
                                 <a ui-set="{'activeTab': 3}">Custom</a>
                             </li>
                         </ul>
-                        <div ui-if="activeTab == 1">
-                            <label>Birthday: <input kendo-date-picker k-options="monthPickerConfig" ng-model="birthday" /></label>
-                            Your selection: {{ birthday }}
-
-                            <div class="place-section k-header wide">
-                                <div kendo-list-view id="listView" k-data-source="source">
-                                    <div class="place" k-template>
-                                        <!--<img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
-                                        <h3>{{ dataItem.name }}</h3>
-                                        <p>{{ dataItem.address }}</p>
-                                    </div>
-                                </div>
-                                <div kendo-pager k-data-source="source"></div>
-                            </div>
-                        </div>
-                        <div ui-if="activeTab == 2">
-                            <h3 class="page-header">Tab 2</h3>
-                            <!-- ... -->
-                        </div>
-
-                        <div ui-if="activeTab == 3">
-                            <h3 class="page-header">Tab 3</h3>
-                            <!-- ... -->
-                        </div>
-                    </div>
-
-                    <div class="col-md-8">
-                        
-                        <div id="map-container">
-                            <!--<leaflet></leaflet>-->
-                            <map center="current-location" zoom="18" >
-                                <custom-control id="go-home" position="TOP_RIGHT" index="1" on-click="goHome()">
-                                    <div class="panel"><div vivagraph-test></div>
-                                        <div class="round-button"><div class="round-button-circle"><a href="http://example.com" class="round-button">Button!!</a></div></div>
-                                    </div>
-                                </custom-control>
-
-                              
-                                <info-window position="current-location" visible="true">
-                                    <span>You are here.</span>
-                                </info-window>
-                            </map>
-                        </div>
-                        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
-                        <!--<div id="graph-container" sigma-test></div>-->
-                        <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
-                        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
-                        <!--<div ng-repeat="company in companyNames"><p>{{adverts.company.companyInfo.companyName}}</p></div>-->
-                        <div ng-repeat="advert in adverts"><p>companyName:{{advert.companyInfo.companyName}} latitude:{{advert.location.coordinates[0].latitude}} | longitude:{{advert.location.coordinates[0].longitude}} index:{{$index}}</p></div>
-                    </div>
-           
-                </div>
             
+
+                    <div ui-if="activeTab == 1">
+
+
+                        <div class="place-section k-header wide">
+                            <div kendo-list-view id="listView" k-data-source="source">
+                                <div class="place" k-template>
+                                    <!--<img ng-src="../content/web/foods/{{dataItem.ProductID}}.jpg" alt=" {{dataItem.ProductName}} image" />-->
+                                    <h3>{{ dataItem.name }}</h3>
+                                    <p>{{ dataItem.address }}</p>
+                                </div>
+                            </div>
+                            <div kendo-pager k-data-source="source"></div>
+                        </div>
+                    </div>
+                    <div ui-if="activeTab == 2">
+                        <h3 class="page-header">Tab 2</h3>
+                        <div class="round-button"><div class="round-button-circle"><a href="http://example.com" class="round-button">Button!!</a></div></div>
+                        <div vivagraph-test class="place-section" id="graph-container"></div>
+                    </div>
+
+                    <div ui-if="activeTab == 3">
+                        <h3 class="page-header">Tab 3</h3>
+                        <div class="panel">
+
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="advert in adverts">
+                                    <h3>{{advert.companyInfo.companyName}}</h3>
+                                    <p>{{advert.address.streetName}}</p>
+                                    <p>{{advert.address.postCode}}</p>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="col-md-8">
+
+        <div id="map-container">
+            <!--<leaflet></leaflet>-->
+
+
+            <map center="current-location" disable-default-u-i="true" zoom="18" styles="[  {featureType:'poi.business',stylers:[{visibility:'off'}]},
+                                                                                {featureType:'poi.lodging',stylers:[{visibility:'off'}]},
+                                                                                {featureType:'poi.cafe',stylers:[{visibility:'off'}]},
+                                                                                {featureType:'poi.store',stylers:[{visibility:'off'}]},
+                                                                                {featureType:'water',stylers:[{visibility:'on'},{hue:'#165c64'},{lightness:-69},{saturation:34}]},
+                                                                                {featureType:'landscape',stylers:[{visibility:'on'},{hue:'#b7caaa'},{saturation:-14},{lightness:-18}]},
+                                                                                {featureType:'poi.park',stylers:[{visibility:'on'},{hue:'#8ba975'},{saturation:-46},{lightness:-28}]},
+                                                                                {featureType:'poi',stylers:[{hue:'#c17118'},{saturation:61},{lightness:-45}]},
+                                                                                {featureType:'road',stylers:[{visibility:'on'},{hue:'#8d9b83'},{saturation:-89},{lightness:-12}]},
+                                                                                {featureType:'road.arterial',stylers:[{visibility:'simplified'},{hue:'#bdc5b6'},{saturation:-89},{lightness:-3}]},
+                                                                                {featureType:'road.local',stylers:[{visibility:'on'},{hue:'#bdc5b6'},{saturation:-89},{lightness:-26}]}]">
+
+                <custom-control id="go-home" position="TOP_RIGHT" index="1">
+                    <div class="round-map-circle">
+                        <div vivagraph-test class="place-section" id="graph-container"></div>
+
+                    </div>
+                </custom-control>
+
+
+                <info-window position="current-location" visible="true">
+                    <span>You are here.</span>
+                </info-window>
+            </map>
+        </div>
+        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->
+        <!--<div id="graph-container" sigma-test></div>-->
+        <!--<svg id="graphic_1" xmlns="http://www.w3.org/2000/svg" version="1.1" snap-test></svg>-->
+        <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" d3-test></svg>-->
+        <!--<div ng-repeat="company in companyNames"><p>{{adverts.company.companyInfo.companyName}}</p></div>-->
+        <!--<div ng-repeat="advert in adverts"><p>companyName:{{advert.companyInfo.companyName}} latitude:{{advert.location.coordinates[0].latitude}} | longitude:{{advert.location.coordinates[0].longitude}} index:{{$index}}</p></div>-->
+    </div>
 </div>
+
+
+
 
 

@@ -7,7 +7,7 @@
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
-        [Authorize]
+        [AllowAnonymous]
         [Route("")]
         public IHttpActionResult Get()
         {

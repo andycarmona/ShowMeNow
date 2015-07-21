@@ -15,11 +15,14 @@ namespace ShowMeNow.API.Controllers
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
+    using System.Web.Http.Cors;
+
     using ShowMeNow.API.Helpers;
     using ShowMeNow.API.Models.Dto;
     using ShowMeNow.API.Repositories;
     using ShowMeNow.API.Services;
 
+    [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Places")]
     public class PlacesController : ApiController
     {
@@ -56,6 +59,7 @@ namespace ShowMeNow.API.Controllers
             return response;
         }
 
+        [AllowAnonymous]
         [Route("GetAllPlaces")]
         [AcceptVerbs("GET")]
         public IEnumerable GetAllPlaces()
@@ -74,6 +78,7 @@ namespace ShowMeNow.API.Controllers
             return listOfPlaces;
         }
 
+          [AllowAnonymous]
         [Route("GetAllPeople")]
         [AcceptVerbs("GET")]
         public List<PersonDto> GetAllPeople()

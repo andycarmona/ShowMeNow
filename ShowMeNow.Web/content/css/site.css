@@ -8,8 +8,8 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-      padding-top: 40px;
-  padding-bottom: 10px;
+    padding-top: 40px;
+    padding-bottom: 10px;
 }
 
 
@@ -52,7 +52,7 @@ body {
         }
 
     .form-login input[type="password"] {
-        margin-top:5px;
+        margin-top: 5px;
         margin-bottom: 5px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -61,17 +61,15 @@ body {
 /* Container box to set the sides relative to */
 .cube {
     width: 100%;
-	text-align: center;
-	margin: 0 auto;
-	height: 100%;
-
-	-webkit-transition: -webkit-transform .33s;
+    text-align: center;
+    margin: 0 auto;
+    height: 100%;
+    -webkit-transition: -webkit-transform .33s;
     -moz-transition: transform .33s;
     -ms-transition: transform .33s;
     -o-transition: transform .33s;
     transition: transform .33s; /* Animate the transform properties */
-
-	-webkit-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -ms-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
@@ -79,26 +77,23 @@ body {
 }
 
 /* The two faces of the cube */
-#map-container,.frontFace,.backFace {
+#map-container, .frontFace, .backFace {
     background: rgb(247, 247, 247);
-	border: 1px solid rgba(147, 184, 189, .8);
-
-	-webkit-border-radius: 5px;
+    border: 1px solid rgba(147, 184, 189, .8);
+    -webkit-border-radius: 5px;
     -ms-border-radius: 5px;
     border-radius: 5px;
-
-	-webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    -webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     -ms-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
-	/*height: 400px;*/
-}
-#map-container {
-    position: absolute;
+    /*height: 400px;*/
 }
 
 map {
-    height: 500px;
+    height: 100%;
 }
+
+
 /* Position the faces */
 .frontFace {
     -webkit-transform: translateZ(50px);
@@ -117,7 +112,7 @@ map {
 }
 
 /* Rotate the cube */
-.cubeHover  {
+.cubeHover {
     -webkit-transform: rotateX(89deg);
     -moz-transform: rotateX(89deg);
     -ms-transform: rotateX(89deg);
@@ -125,35 +120,273 @@ map {
     transform: rotateX(89deg); /* Text bleed at 90º */
 }
 
-svg,#graph-container {
-   height: 500px;
-  width: 500px;
-  position: relative;
-  top: 0px;
-  overflow: hidden;
-  margin: 0px;
-  z-index: 1;
-  }
+#graph-container {
+    height: 250px;
+    width: 350px;
+    position: relative;
+    top: 55px;
+    /*overflow: hidden;*/
+    margin: 0px;
+    z-index: 1;
+}
 
-.angular-leaflet-map,#map-container {
-         height: 500px;
-  width: 500px;
-  position: absolute;
-  overflow: hidden;
-  margin: 0px;
-  top: 0px;
-  }
+svg {
+  height: 350px;
+  width: 350px;
+  top: 50px;
 
- .node circle {
-   fill: #fff;
-   stroke: steelblue;
-   stroke-width: 3px;
- }
+}
 
- .node text { font: 12px sans-serif; }
+.mappanel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: transparent;
+    padding: 5px;
+    border: 1px solid #999;
+}
 
- .link {
-   fill: none;
-   stroke: #ccc;
-   stroke-width: 2px;
- }
+#map-container {
+    height: 500px;
+    margin: 0;
+    padding: 0;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 3px;
+}
+
+.node text {
+    font: 12px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+.graph-nodes {
+    position: relative;
+    right: 0px;
+}
+
+#panel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+/*
+      Provide the following styles for both ID and class,
+      where ID represents an actual existing "panel" with
+      JS bound to its name, and the class is just non-map
+      content that may already have a different ID with
+      JS bound to its name.
+      */
+
+#panel, .panel {
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+
+    #panel select, #panel input, .panel select, .panel input {
+        font-size: 15px;
+    }
+
+    #panel select, .panel select {
+        width: 100%;
+    }
+
+    #panel i, .panel i {
+        font-size: 12px;
+    }
+
+#results {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -195px;
+    height: 380px;
+    width: 200px;
+    padding: 5px;
+    z-index: 5;
+    border: 1px solid #999;
+    background: #fff;
+}
+
+.place-section {
+    max-width: 860px;
+}
+
+
+#listView {
+    background: rgb(247, 247, 247);
+    border: 1px solid rgba(147, 184, 189, .8);
+    -webkit-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    -ms-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    padding: 10px 5px;
+    margin-bottom: -1px;
+    min-height: 50px;
+}
+
+.place {
+    float: left;
+    position: relative;
+    width: 111px;
+    height: 170px;
+    margin: 0 5px;
+    padding: 0;
+}
+
+    .place img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .place h3 {
+        margin: 0;
+        padding: 3px 5px 0 0;
+        max-width: 96px;
+        overflow: hidden;
+        line-height: 1.1em;
+        font-size: .9em;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: #999;
+    }
+
+    .place p {
+        visibility: hidden;
+    }
+
+    .place:hover p {
+        visibility: visible;
+        position: absolute;
+        width: 110px;
+        height: 110px;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        line-height: 110px;
+        vertical-align: middle;
+        text-align: center;
+        color: #fff;
+        background-color: rgba(0,0,0,0.75);
+        transition: background .2s linear, color .2s linear;
+        -moz-transition: background .2s linear, color .2s linear;
+        -webkit-transition: background .2s linear, color .2s linear;
+        -o-transition: background .2s linear, color .2s linear;
+    }
+
+.k-listview:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.panel-body {
+    padding: 41px;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: rgb(252, 247, 245);
+}
+
+.app-body {
+    background-color: #F7F7F7;
+}
+
+.panel {
+    background-color: lightgrey;
+}
+
+.navpanel {
+    background-color: #F7F7F7;
+    height: 450px;
+}
+.navheader {
+    position: fixed;
+}
+
+.round-button {
+}
+
+.round-map-circle {
+     width: 250px;
+  height: 250px;
+  /* padding-bottom: 100%; */
+  border-radius: 50%;
+  border: 4px solid #cfdcec;
+  /* overflow: hidden; */
+  background: transparent;
+  box-shadow: 0 0 3px gray;
+}
+
+    .round-map-circle:hover {
+        background: #30588e;
+    }
+
+.round-button-circle {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    border-radius: 50%;
+    border: 10px solid #cfdcec;
+    overflow: hidden;
+    background: #4679BD;
+    box-shadow: 0 0 3px gray;
+}
+
+    .round-button-circle:hover {
+        background: #30588e;
+    }
+
+.round-button a {
+    display: block;
+    float: left;
+    width: 100%;
+    padding-top: 50%;
+    padding-bottom: 50%;
+    line-height: 1em;
+    text-align: center;
+    color: #e2eaf3;
+    font-family: Verdana;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-top .app-body {
+    background-color: rgb(227, 169, 26);
+}
+
+.navbar-app {
+    background-color: #DAB782;
+}
+
+.scrollable {
+   border: 1px solid rgba(147, 184, 189, .8);
+    -webkit-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    -ms-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+    box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+}

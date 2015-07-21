@@ -87,6 +87,8 @@
     <Content Include="content\css\font-awesome.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
+    <Content Include="content\css\mobile-angular-ui-base.css" />
+    <Content Include="content\css\mobile-angular-ui-desktop.css" />
     <Content Include="content\css\site.css" />
     <Content Include="content\css\social-buttons.css" />
     <Content Include="content\fonts\fontawesome-webfont.svg" />
@@ -110,6 +112,14 @@
     <Content Include="app\app.js" />
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\images\coffee.png" />
+    <Content Include="content\images\dance.png" />
+    <Content Include="content\images\fastfood.png" />
+    <Content Include="content\images\festival.png" />
+    <Content Include="content\images\hotel.png" />
+    <Content Include="content\images\info.png" />
+    <Content Include="content\images\restaurant.png" />
+    <Content Include="content\images\teahouse.png" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-leaflet-directive.min.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
@@ -117,7 +127,10 @@
     <Content Include="scripts\d3.min.js" />
     <Content Include="scripts\kendo.custom.min.js" />
     <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\mobile-angular-ui.components.min.js" />
+    <Content Include="scripts\mobile-angular-ui.min.js" />
     <Content Include="scripts\sigma.min.js" />
+    <Content Include="scripts\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="scripts\vivagraph.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>

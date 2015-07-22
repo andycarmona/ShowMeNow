@@ -54,7 +54,7 @@
                                         <img ng-click="showDirections(advert.location.coordinates[0].latitude, advert.location.coordinates[0].longitude,'bus')" src="../content/images/bus.png" alt="by Bus" />
                                         <img ng-click="showDirections(advert.location.coordinates[0].latitude, advert.location.coordinates[0].longitude,'walk')" src="../content/images/walking.png" alt="by Walking" />
                                         <img ng-click="showDirections(advert.location.coordinates[0].latitude, advert.location.coordinates[0].longitude,'bike')" src="../content/images/cycling.png" alt="by Bike" />
-                                   
+                                        <button ng-click="findDirection(advert.address.streetName)">Get direction</button>
                                     </li>
 
                                 </ul>

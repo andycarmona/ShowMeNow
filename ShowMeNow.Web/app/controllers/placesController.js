@@ -92,7 +92,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
 }
 
     $scope.triggernode = function (clickEl) {
-        placesService.GetExternalList(57.709421, 11.964304, "gothenburg", clickEl).then(function (d) {
+        placesService.GetExternalList($scope.actualLatitude, $scope.actualLongitude, "gothenburg", clickEl).then(function (d) {
             $scope.image = {
                 url: '../content/images/' + clickEl + '.png',
                 size: new google.maps.Size(32, 37),
@@ -119,6 +119,25 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                     markers[i].setPosition(latlng);
                     markers[i].setMap($scope.map);
                 }
+            }
+        });
+    }
+
+    $scope.findDirection = function (address) {
+        placesService.GetDirections(address).then(function(results) {
+            $scope.placeByaddress = results.data;
+            var missingMarker = new google.maps.Marker({
+                title: "Testeo",
+                shape: $scope.shape,
+                icon: '../content/images/car.png',
+                zIndex: 10
+            });
+            var lat = parseFloat(results.data.results[0].geometry.location.lat);
+            var lng = parseFloat(results.data.results[0].geometry.location.lng);
+            if ((lat != undefined) || (lng != undefined)) {
+                var latlng = new google.maps.LatLng(lat, lng);
+                missingMarker.setPosition(latlng);
+                missingMarker.setMap($scope.map);
             }
         });
     }

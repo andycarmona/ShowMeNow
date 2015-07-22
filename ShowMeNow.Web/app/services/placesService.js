@@ -38,14 +38,9 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
         return promise;
     }
 
-    var _getDirections = function(startpoint, endpoint) {
-        var params = JSON.stringify({
-            latitude: latitude,
-            longitude: longitude
-        });
-        var url = "http://api.eniro.com/cs/search/basic?country=se&version=1.1.3&geo_area=" + area + "&search_word=" + searchword + "&max_distance=1&key=330905261700999336&profile=andyw&from_list=0&to_list=5&callback=JSON_CALLBACK&data=";
-        var promise = $http.jsonp(url + params).then(function (response) {
-
+    var _getDirections = function(addressToSearch) {
+        var url = "http://maps.google.com/maps/api/geocode/json?address="+addressToSearch+",gothenburg&sensor=false";
+        var promise = $http.get(url).then(function (response) {
             return response;
         });
         return promise;
@@ -56,6 +51,7 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
     placesServiceFactory.GetAllPlaces = _getAllPlaces;
     placesServiceFactory.GetAllPeople = _getAllPeople;
     placesServiceFactory.GetExternalList = _getExternalList;
+    placesServiceFactory.GetDirections = _getDirections;
 
     return placesServiceFactory;
 

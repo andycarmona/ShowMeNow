@@ -8,9 +8,7 @@
             graphics.getSvgRoot().append(scope.defs);
 
 
-            $(scope.defs).click(function () {
-                console.log("clicked");
-            });
+         
 
             graphics.node(createNodeWithImage)
               .placeNode(placeNodeWithTransform);
@@ -31,8 +29,8 @@
             var pattern = Viva.Graph.svg('pattern')
                 .attr('id', "imageFor_" + node.id)
                 .attr('patternUnits', "userSpaceOnUse")
-                .attr('width', 650)
-                .attr('height', 650);
+                .attr('width', 350)
+                .attr('height', 350);
 
             var image = Viva.Graph.svg('image')
               .attr('x', '0')

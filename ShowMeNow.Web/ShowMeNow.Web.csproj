@@ -67,6 +67,7 @@
     <Content Include="app\controllers\signupController.js" />
     <Content Include="app\controllers\tokensManagerController.js" />
     <Content Include="app\directives\D3Directives.js" />
+    <Content Include="app\directives\UtilsDirectives.js" />
     <Content Include="app\directives\VivaGraphDirectives.js" />
     <Content Include="app\directives\SigmaDirectives.js" />
     <Content Include="app\directives\SnapSvgDirectives.js" />
@@ -75,6 +76,7 @@
     <Content Include="app\services\placesService.js" />
     <Content Include="app\services\ordersService.js" />
     <Content Include="app\services\tokensManagerService.js" />
+    <Content Include="app\templates\modalerror.html" />
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
@@ -112,10 +114,14 @@
     <Content Include="app\app.js" />
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="content\images\bus.png" />
+    <Content Include="content\images\car.png" />
     <Content Include="content\images\coffee.png" />
+    <Content Include="content\images\cycling.png" />
     <Content Include="content\images\dance.png" />
     <Content Include="content\images\fastfood.png" />
     <Content Include="content\images\festival.png" />
+    <Content Include="content\images\walking.png" />
     <Content Include="content\images\hotel.png" />
     <Content Include="content\images\info.png" />
     <Content Include="content\images\restaurant.png" />

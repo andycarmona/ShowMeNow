@@ -89,9 +89,6 @@ body {
     /*height: 400px;*/
 }
 
-map {
-    height: 100%;
-}
 
 
 /* Position the faces */
@@ -148,11 +145,7 @@ svg {
     border: 1px solid #999;
 }
 
-#map-container {
-    height: 500px;
-    margin: 0;
-    padding: 0;
-}
+
 
 .node circle {
     fill: #fff;
@@ -310,16 +303,17 @@ svg {
 }
 
 .app-body {
-    background-color: #F7F7F7;
+    background-color: #DAF3C1;
 }
 
 .panel {
     background-color: lightgrey;
 }
 
+
 .navpanel {
     background-color: #F7F7F7;
-    height: 450px;
+
 }
 .navheader {
     position: fixed;
@@ -389,4 +383,5 @@ svg {
     -webkit-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     -ms-box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
     box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
+     background-color: white;
 }

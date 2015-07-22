@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'kendo.directives', 'SnapSvgDirectives', 'SigmaDirectives', 'VivaGraphDirectives', 'D3Directives', 'ngMap', 'mobile-angular-ui']);
+var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'kendo.directives', 'SnapSvgDirectives', 'SigmaDirectives', 'VivaGraphDirectives', 'D3Directives', 'ngMap', 'mobile-angular-ui','UtilsDirectives']);
 
 app.config(function ($routeProvider) {
 

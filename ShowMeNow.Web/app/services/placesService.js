@@ -38,6 +38,19 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
         return promise;
     }
 
+    var _getDirections = function(startpoint, endpoint) {
+        var params = JSON.stringify({
+            latitude: latitude,
+            longitude: longitude
+        });
+        var url = "http://api.eniro.com/cs/search/basic?country=se&version=1.1.3&geo_area=" + area + "&search_word=" + searchword + "&max_distance=1&key=330905261700999336&profile=andyw&from_list=0&to_list=5&callback=JSON_CALLBACK&data=";
+        var promise = $http.jsonp(url + params).then(function (response) {
+
+            return response;
+        });
+        return promise;
+    }
+
     placesServiceFactory.InitializeDataBase = _initializeDB;
     placesServiceFactory.AddInitialPeople = _addInitialPeople;
     placesServiceFactory.GetAllPlaces = _getAllPlaces;

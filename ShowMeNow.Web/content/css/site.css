@@ -127,12 +127,23 @@ body {
     z-index: 1;
 }
 
-svg {
-  height: 350px;
-  width: 350px;
-  top: 50px;
-
+#social-container {
+    height: 100%;
+    width: 80%;
+    position: relative;
+    margin: 0px;
+    z-index: 3;
 }
+
+.sidebarContainer {
+    z-index: 1;
+}
+
+svg {
+     height: 100%;
+    width: 100%;
+}
+
 
 .mappanel {
     position: absolute;
@@ -371,10 +382,23 @@ svg {
     background-color: rgb(227, 169, 26);
 }
 
-.navbar-app {
+.navbar-app, #foo {
     background-color: #DAB782;
 }
-
+ .positioninfo {
+    background-color: orange;
+     color: red;
+}
+  .marker {
+            width: 16px;
+            height: 16px;
+            background: #3F7FEF;
+            text-align: center;
+            border-radius: 50%;
+            cursor: move;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            -webkit-transition: box-shadow .2s;
+        }
 .scrollable {
    border: 1px solid rgba(147, 184, 189, .8);
     -webkit-border-radius: 5px;
@@ -385,3 +409,23 @@ svg {
     box-shadow: 0 5px 20px rgba(105, 108, 109, .3), 0 0 8px 5px rgba(208, 223, 226, .4) inset;
      background-color: white;
 }
+@media only screen and (max-device-width: 995px) {
+    .barlistmob {
+        visibility: visible;
+        position: relative;
+        top: 0px;
+    }
+    .sidebar {
+        visibility: hidden;
+    }
+	}
+@media only screen and (min-device-width: 995px) {
+    .barlistmob {
+        visibility: hidden;
+       bottom: 39px;
+    position: absolute;
+    }
+    .sidebar {
+        visibility: visible;
+    }
+	}

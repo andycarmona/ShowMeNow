@@ -95,17 +95,19 @@
                                                                                 {featureType:'road',stylers:[{visibility:'on'},{hue:'#8d9b83'},{saturation:-89},{lightness:-12}]},
                                                                                 {featureType:'road.arterial',stylers:[{visibility:'simplified'},{hue:'#bdc5b6'},{saturation:-89},{lightness:-3}]},
                                                                                 {featureType:'road.local',stylers:[{visibility:'on'},{hue:'#bdc5b6'},{saturation:-89},{lightness:-26}]}]">
-
-                    <custom-control id="go-home" position="TOP_CENTER" index="1">
+                   
+                    <shape editable="true" on-bounds_changed="boundsChanged()" name="circle" stroke-color="0x10000000" stroke-opacity="0.8" stroke-weight="2" fill-color="color.transparent" fill-opacity="0.15" center="current-location" radius="{{actualRadius}}">
+                    </shape>
+                    <!--<custom-control id="go-home" position="TOP_CENTER" index="1">
                
-                            <div vivagraph-test class="place-section" id="graph-container"></div>
+                            <div vivagraph-menu class="place-section" id="graph-container"></div>
 
-                    </custom-control>
+                    </custom-control>-->
+                
 
-
-                    <info-window position="current-location" visible="true">
-                        <span>You are here.</span>
-                    </info-window>
+                    <!--<info-window class="marker" ng-class="positioninfo" position="current-location" visible="true">
+                        <span>You are here.<br /> Find a place {{actualRadius}}meters around you.</span>
+                    </info-window>-->
                 </map>
             </div>
             <!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" vivagraph-test></svg>-->

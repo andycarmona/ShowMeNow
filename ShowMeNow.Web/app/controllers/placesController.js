@@ -3,31 +3,62 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
 
     $scope.places = [];
     var markers = [];
-    var watchID = navigator.geolocation.watchPosition(showPosition,positionError);
+    var watchID = navigator.geolocation.watchPosition(showPosition, positionError);
     var directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     var directionsService = new google.maps.DirectionsService();
+    var actualCoords;
     $scope.errorMessage = "No errors";
     $scope.iframeHeight = window.innerHeight;
     $scope.iframeWidth = window.innerWidth;
+    $scope.actualRadius = 100;
+    $scope.infoBox = new google.maps.InfoWindow();
     $scope.shape = {
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
         type: 'poly'
     };
 
+    $scope.$on('mapInitialized', function (event, map) {
+        if ($scope.map) {
+            placesService.AddMap(map);
+        } else {
+            placesService.GetMap(map);
+        }
+        google.maps.event.addListener($scope.map, 'tilesInitialized', function () {
+            console.log("map loaded");
+        });
+    });
+
+   
+
+
+
     function showPosition(position) {
         var coords = position.coords;
         $scope.actualLatitude = coords.latitude;
         $scope.actualLongitude = coords.longitude;
-       
+        actualCoords = new google.maps.LatLng($scope.actualLatitude, $scope.actualLongitude);
+        $scope.map.setCenter(actualCoords);
+        $scope.showInfoBox();
+    }
+
+    $scope.showInfoBox = function (city) {
+
+        $scope.infoBox.setContent("You are here.<br /> Find a place" + $scope.actualRadius + " meters around you.");
+        $scope.infoBox.setPosition(actualCoords);
+        $scope.infoBox.open($scope.map);
+      
+    }
+
+    $scope.findCenterOfMap = function () {
+
+        $scope.map.setCenter(actualCoords);
     }
 
     $scope.logMsg = function (msg) {
         $scope.errorMessage = msg;
-        console.log(msg);
-        //log.append("<li>" + msg + "</li>");
     }
 
-   function positionError(e) {
+    function positionError(e) {
         switch (e.code) {
             case 0:
                 // UNKNOWN_ERROR
@@ -47,6 +78,13 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                 break;
         }
     }
+
+
+    $scope.boundsChanged = function (event) {
+        $scope.actualRadius = Math.round(this.radius);
+        $scope.infoBox.setContent("You are here.<br /> Find a place in " + $scope.actualRadius + " meters.");
+    };
+
     $scope.placeslist = new kendo.data.DataSource({
         transport: {
             read: {
@@ -57,7 +95,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
         pageSize: 2
     });
 
-    $scope.showDirections = function(latEnd, longEnd, transport) {
+    $scope.showDirections = function (latEnd, longEnd, transport) {
         var chosentravelMode = google.maps.TravelMode.WALKING;
         if (transport === "car") {
             chosentravelMode = google.maps.TravelMode.DRIVING;
@@ -80,7 +118,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                 travelMode: chosentravelMode
             };
 
-            directionsService.route(request, function(response, status) {
+            directionsService.route(request, function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
 
@@ -89,7 +127,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
         } else {
             $scope.logMsg("Sorry, couldn't find coordinates.");
         }
-}
+    }
 
     $scope.triggernode = function (clickEl) {
         placesService.GetExternalList($scope.actualLatitude, $scope.actualLongitude, "gothenburg", clickEl).then(function (d) {
@@ -105,6 +143,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                 pageSize: 5
             });
 
+
             for (var i = 0; i < $scope.adverts.length; i++) {
                 markers[i] = new google.maps.Marker({
                     title: $scope.adverts[i].companyInfo.companyName,
@@ -112,19 +151,23 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                     icon: $scope.image.url,
                     zIndex: i + 1
                 });
+
                 var lat = parseFloat(d.data.adverts[i].location.coordinates[0].latitude);
                 var lng = parseFloat(d.data.adverts[i].location.coordinates[0].longitude);
                 if ((lat != undefined) || (lng != undefined)) {
-                    var latlng = new google.maps.LatLng(lat, lng);
-                    markers[i].setPosition(latlng);
-                    markers[i].setMap($scope.map);
+                    var markerlatlng = new google.maps.LatLng(lat, lng);
+                    var distance = google.maps.geometry.spherical.computeDistanceBetween(actualCoords, markerlatlng);
+                    if (distance <= $scope.actualRadius) {
+                        markers[i].setPosition(markerlatlng);
+                        markers[i].setMap($scope.map);
+                    }
                 }
             }
         });
     }
 
     $scope.findDirection = function (address) {
-        placesService.GetDirections(address).then(function(results) {
+        placesService.GetDirections(address).then(function (results) {
             $scope.placeByaddress = results.data;
             var missingMarker = new google.maps.Marker({
                 title: "Testeo",

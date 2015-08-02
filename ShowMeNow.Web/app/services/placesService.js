@@ -35,17 +35,34 @@ app.factory('placesService', ['$http', 'ngAuthSettings', function ($http, ngAuth
         return $http.get(serviceBase + 'api/Places/GetAllPeople');
     };
 
-    var _getExternalList = function (latitude, longitude, area, searchword) {
+    var _getExternalList = function (actualLatitude, actualLongitude, area, searchword,radius) {
         var params = JSON.stringify({
-            latitude: latitude,
-            longitude: longitude
+            latitude: actualLatitude,
+            longitude: actualLongitude
         });
-        var url = "http://api.eniro.com/cs/search/basic?country=se&version=1.1.3&geo_area=" + area + "&search_word=" + searchword + "&max_distance=100&key=330905261700999336&profile=andyw&from_list=0&to_list=5&callback=JSON_CALLBACK&data=";
-        var promise = $http.jsonp(url + params).then(function (response) {
-
-            return response;
+        var url = "http://api.eniro.com/cs/search/basic?country=se&version=1.1.3&geo_area=" + area + "&search_word=" + searchword + "&actualLatitude=" + actualLatitude + "&actualLongitude=" + actualLongitude + "&max_distance="+radius+"&key=330905261700999336&profile=andyw&callback=JSON_CALLBACK";
+        var promise = $http.jsonp(url).then(function (response) {
+            var filteredResult=checkPointInArea(actualLatitude, actualLongitude, response,radius);
+            return filteredResult;
         });
         return promise;
+    }
+
+    function checkPointInArea(actualLatitude, actualLongitude, mapData,radius) {
+
+        var filteredResult = [];
+        var actualPosition = new google.maps.LatLng(actualLatitude, actualLongitude);
+        for (var i = 0; i < mapData.data.adverts.length; i++) {
+            var lat = parseFloat(mapData.data.adverts[i].location.coordinates[0].latitude);
+            var lng = parseFloat(mapData.data.adverts[i].location.coordinates[0].longitude);
+            var markerPosition = new google.maps.LatLng(lat, lng);
+            var distance = google.maps.geometry.spherical.computeDistanceBetween(actualPosition, markerPosition);
+            if (distance <= radius) {
+                filteredResult.push(mapData.data.adverts[i]);
+            }
+        }
+        return filteredResult;
+
     }
 
     var _getDirections = function (addressToSearch) {

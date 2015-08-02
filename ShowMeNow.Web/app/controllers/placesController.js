@@ -3,9 +3,10 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
 
     $scope.places = [];
     var markers = [];
-    var watchID = navigator.geolocation.watchPosition(showPosition, positionError);
+    
     var directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
     var directionsService = new google.maps.DirectionsService();
+  
     var actualCoords;
     $scope.errorMessage = "No errors";
     $scope.iframeHeight = window.innerHeight;
@@ -16,7 +17,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
         coords: [1, 1, 1, 20, 18, 20, 18, 1],
         type: 'poly'
     };
-
+  
     $scope.$on('mapInitialized', function (event, map) {
         if ($scope.map) {
             placesService.AddMap(map);
@@ -28,18 +29,34 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
         });
     });
 
-   
-
-
-
-    function showPosition(position) {
-        var coords = position.coords;
-        $scope.actualLatitude = coords.latitude;
-        $scope.actualLongitude = coords.longitude;
-        actualCoords = new google.maps.LatLng($scope.actualLatitude, $scope.actualLongitude);
-        $scope.map.setCenter(actualCoords);
-        $scope.showInfoBox();
+    $scope.getLocation = function () {
+        if (navigator.geolocation) {
+           navigator.geolocation.getCurrentPosition(showPosition, positionError);
+        }
+        else {
+            $scope.logMsg("Geolocation is not supported by this browser.");
+        }
     }
+   
+    //var positionTimer = navigator.geolocation.watchPosition(
+    //          function (position) {
+    //              var coords = position.coords;
+    //              if (coords.latitude !== $scope.actualLatitude) {
+    //                  actualCoords = new google.maps.LatLng(coords.latitude, coords.longitude);
+    //                  $scope.map.setCenter(actualCoords);
+    //              }
+    //          }
+    //      );
+
+    //// If the position hasn't updated within 5 minutes, stop
+    //// monitoring the position for changes.
+    //setTimeout(
+    //    function () {
+    //        // Clear the position watcher.
+    //        navigator.geolocation.clearWatch(positionTimer);
+    //    },
+    //    (1000 * 60 * 5)
+    //);
 
     $scope.showInfoBox = function (city) {
 
@@ -56,6 +73,15 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
 
     $scope.logMsg = function (msg) {
         $scope.errorMessage = msg;
+    }
+
+    function showPosition(position) {
+        var coords = position.coords;
+        $scope.actualLatitude = coords.latitude;
+        $scope.actualLongitude = coords.longitude;
+        actualCoords = new google.maps.LatLng($scope.actualLatitude, $scope.actualLongitude);
+        $scope.map.setCenter(actualCoords);
+        $scope.showInfoBox();
     }
 
     function positionError(e) {
@@ -130,16 +156,16 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
     }
 
     $scope.triggernode = function (clickEl) {
-        placesService.GetExternalList($scope.actualLatitude, $scope.actualLongitude, "gothenburg", clickEl).then(function (d) {
+        placesService.GetExternalList($scope.actualLatitude, $scope.actualLongitude, "gothenburg", clickEl, $scope.actualRadius).then(function (d) {
             $scope.image = {
                 url: '../content/images/' + clickEl + '.png',
                 size: new google.maps.Size(32, 37),
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(0, 37)
             };
-            $scope.adverts = d.data.adverts;
+            $scope.adverts = d;
             $scope.placesList = new kendo.data.DataSource({
-                data: d.data.adverts,
+                data: d,
                 pageSize: 5
             });
 
@@ -152,8 +178,8 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
                     zIndex: i + 1
                 });
 
-                var lat = parseFloat(d.data.adverts[i].location.coordinates[0].latitude);
-                var lng = parseFloat(d.data.adverts[i].location.coordinates[0].longitude);
+                var lat = parseFloat($scope.adverts[i].location.coordinates[0].latitude);
+                var lng = parseFloat($scope.adverts[i].location.coordinates[0].longitude);
                 if ((lat != undefined) || (lng != undefined)) {
                     var markerlatlng = new google.maps.LatLng(lat, lng);
                     var distance = google.maps.geometry.spherical.computeDistanceBetween(actualCoords, markerlatlng);
@@ -199,5 +225,7 @@ app.controller('placesController', ['$scope', 'placesService', function ($scope,
     }, function (error) {
         //alert(error.data.message);
     });
+
+    $scope.getLocation();
 
 }]);
